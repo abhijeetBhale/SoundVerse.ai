@@ -1,0 +1,114 @@
+'use client';
+
+import React from 'react';
+import { PlusCircle, Home, Search, Library, User } from 'lucide-react';
+import { getUIImage } from '@/assets/images';
+
+interface SidebarProps {
+  activeNavItem: 'create' | 'home' | 'search' | 'library' | 'dna';
+  onNavItemClick: (item: 'create' | 'home' | 'search' | 'library' | 'dna') => void;
+  onLogoClick?: () => void; // New prop for logo click
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogoClick }) => {
+  const navItems = [
+    { id: 'create' as const, icon: PlusCircle, label: 'Create' },
+    { id: 'home' as const, icon: Home, label: 'Home' },
+    { id: 'search' as const, icon: Search, label: 'Search' },
+    { id: 'library' as const, icon: Library, label: 'Library' },
+  ];
+
+  return (
+    <div className="fixed left-0 top-0 h-full w-12 sm:w-16 bg-dark-bg z-40 flex flex-col items-center py-4 sm:py-6">
+      {/* Logo */}
+      <div 
+        className="w-10 h-10 sm:w-53 sm:h-47.66 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 cursor-pointer hover:bg-gray-800/20 transition-all duration-200"
+        onClick={onLogoClick}
+        aria-label="Go to Meet DNA page"
+        title="Meet DNA"
+      >
+        <img
+          src={getUIImage('logoSoundverseAi')}
+          alt="SoundVerse AI"
+          className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
+          onError={(e) => {
+            // If logo fails to load, hide it and show fallback
+            console.log('Logo failed to load');
+            const target = e.target as HTMLImageElement;
+            target.style.display = 'none';
+          }}
+        />
+      </div>
+      
+      {/* Navigation Items Container with specified dimensions */}
+      <div className="flex flex-col items-center" style={{ width: '100%', maxWidth: '23.22px', height: 'auto', minHeight: '136px' }}>
+        {/* Navigation Items */}
+        <div className="flex flex-col space-y-1 mb-1">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onNavItemClick(item.id)}
+                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl transition-all duration-200 flex items-center justify-center group ${
+                  activeNavItem === item.id
+                    ? 'bg-[#1C1E1F] text-white'
+                    : 'hover:bg-[#1C1E1F] text-text-secondary hover:text-white'
+                }`}
+                aria-label={item.label}
+                title={item.label}
+              >
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+              </button>
+            );
+          })}
+        </div>
+
+        {/* DNA Tab */}
+        <div className="flex flex-col items-center">
+          <button
+            onClick={() => onNavItemClick('dna')}
+            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl transition-all duration-200 flex items-center justify-center group text-[10px] sm:text-xs font-bold ${
+              activeNavItem === 'dna'
+                ? 'bg-[#1C1E1F] text-white'
+                : 'text-text-secondary hover:text-white hover:bg-[#1C1E1F]'
+            }`}
+            aria-label="DNA"
+            title="DNA"
+          >
+            DNA
+          </button>
+        </div>
+      </div>
+      
+      {/* Profile */}
+      <div className="mt-auto">
+        <button 
+          className="w-8 h-8 sm:w-42 sm:h-42 rounded-full overflow-hidden hover:scale-105 transition-transform duration-200 flex items-center justify-center relative"
+          aria-label="Profile"
+          title="Profile"
+        >
+          <img
+            src="/assets/images/profile-image.jpg"
+            alt="Profile"
+            className="w-full h-full object-cover absolute inset-0"
+            onLoad={() => {
+              // Image loaded successfully
+              console.log('Profile image loaded successfully');
+            }}
+            onError={(e) => {
+              // If image fails to load, hide it and show the User icon
+              console.log('Profile image failed to load');
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+          {/* Fallback User icon - will be visible if image fails to load */}
+          <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;

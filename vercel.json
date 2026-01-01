@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "name": "soundverse-ai",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/audio/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    }
+  ],
+  "functions": {
+    "app/page.tsx": {
+      "maxDuration": 10
+    }
+  }
+}
