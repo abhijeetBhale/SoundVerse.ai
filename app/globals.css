@@ -66,6 +66,31 @@
   font-display: swap;
 }
 
+/* Additional Power Grotesk Variable weights for better coverage */
+@font-face {
+  font-family: 'Power Grotesk Variable';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-UltraBold.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Power Grotesk Variable';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Black.woff2') format('woff2');
+  font-weight: 950;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Power Grotesk Variable';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Regular.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -99,10 +124,14 @@ a {
 /* PowerGrotesk utility classes */
 .font-power-grotesk {
   font-family: 'Power Grotesk', 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  font-display: swap;
 }
 
 .font-power-grotesk-variable {
   font-family: 'Power Grotesk Variable', 'Power Grotesk', 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-feature-settings: "kern" 1, "liga" 1;
+  font-display: swap;
 }
 
 /* Custom scrollbar */

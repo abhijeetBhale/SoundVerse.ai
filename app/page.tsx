@@ -268,15 +268,17 @@ export default function Home() {
           >
             {/* Main Heading */}
             <div className="mb-4 sm:mb-6 md:mb-8">
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white mb-1 sm:mb-2 tracking-wide font-power-grotesk animate-slide-up"
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white mb-1 sm:mb-2 tracking-wide font-power-grotesk-variable animate-slide-up"
               style={{
+                fontFamily: 'Power Grotesk Variable, Power Grotesk, Space Grotesk, Inter, system-ui, sans-serif',
                 fontSize: 'clamp(2rem, 6vw + 1rem, 4.5rem)',
                 fontWeight: '300',
                 lineHeight: '1.1'
               }}>
                 MEET
               </h1>
-              <h2 className="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[12rem] font-black text-white tracking-tight font-power-grotesk animate-slide-up" style={{ 
+              <h2 className="text-5xl xs:text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-[12rem] font-black text-white tracking-tight font-power-grotesk-variable animate-slide-up" style={{ 
+                fontFamily: 'Power Grotesk Variable, Power Grotesk, Space Grotesk, Inter, system-ui, sans-serif',
                 animationDelay: '0.1s', 
                 fontSize: 'clamp(3rem, 12vw + 1rem, 12.5rem)', 
                 lineHeight: '0.9', 

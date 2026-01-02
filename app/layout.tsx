@@ -16,6 +16,37 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Preload Power Grotesk fonts for better loading performance */}
+        <link
+          rel="preload"
+          href="/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Heavy.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-UltraBold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Black.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body className={inter.className}>{children}</body>
     </html>
   )
