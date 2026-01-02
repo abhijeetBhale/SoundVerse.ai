@@ -40,12 +40,6 @@ export const useAudio = () => {
     return Math.pow(linearVolume, 2);
   }, []);
 
-  // Convert logarithmic volume back to linear for display
-  const logarithmicToLinear = useCallback((logVolume: number) => {
-    if (logVolume === 0) return 0;
-    return Math.sqrt(logVolume);
-  }, []);
-
   const updateTime = useCallback(() => {
     if (howlRef.current && playbackState.isPlaying) {
       const currentTime = howlRef.current.seek() as number;
@@ -73,11 +67,12 @@ export const useAudio = () => {
     };
   }, [playbackState.isPlaying, updateTime]);
 
-  const playTrackAtIndex = useCallback((index: number, trackQueue?: StyleCard[]) => {
+  const playTrackAtIndex = useCallback((index: number, trackQueue?: StyleCard[], shouldPlay: boolean = true) => {
     const currentQueue = trackQueue || queue;
     if (index < 0 || index >= currentQueue.length) return;
 
     const track = currentQueue[index];
+    const wasPlaying = playbackState.isPlaying;
     
     // Stop current track if playing
     if (howlRef.current) {
@@ -124,6 +119,48 @@ export const useAudio = () => {
           ...prev,
           currentTrack: track,
           duration: 180,
+          isPlaying: shouldPlay && wasPlaying,
+          currentTime: 0,
+        }));
+        
+        const simulateProgress = () => {
+          setPlaybackState(prev => {
+            if (!prev.isPlaying || prev.currentTime >= prev.duration) {
+              playNext(); // Auto-play next track
+              return { ...prev, isPlaying: false, currentTime: 0 };
+            }
+            return { ...prev, currentTime: prev.currentTime + 0.1 };
+          });
+        };
+        
+        if (shouldPlay && wasPlaying) {
+          intervalRef.current = setInterval(simulateProgress, 100);
+        }
+      }
+    });
+
+    howlRef.current = sound;
+    setCurrentIndex(index);
+    
+    setPlaybackState(prev => ({
+      ...prev,
+      currentTrack: track,
+      currentTime: 0,
+    }));
+
+    setIsPlayerVisible(true);
+
+    // Only start playing if shouldPlay is true
+    if (shouldPlay) {
+      try {
+        sound.play();
+      } catch (error) {
+        console.warn('Audio playback error:', error);
+        // Fallback to simulation mode
+        setPlaybackState(prev => ({
+          ...prev,
+          currentTrack: track,
+          duration: 180,
           isPlaying: true,
           currentTime: 0,
         }));
@@ -140,45 +177,14 @@ export const useAudio = () => {
         
         intervalRef.current = setInterval(simulateProgress, 100);
       }
-    });
-
-    howlRef.current = sound;
-    setCurrentIndex(index);
-    
-    setPlaybackState(prev => ({
-      ...prev,
-      currentTrack: track,
-      currentTime: 0,
-    }));
-
-    setIsPlayerVisible(true);
-
-    try {
-      sound.play();
-    } catch (error) {
-      console.warn('Audio playback error:', error);
-      // Fallback to simulation mode
+    } else {
+      // Set the track but don't start playing
       setPlaybackState(prev => ({
         ...prev,
-        currentTrack: track,
-        duration: 180,
-        isPlaying: true,
-        currentTime: 0,
+        isPlaying: false,
       }));
-      
-      const simulateProgress = () => {
-        setPlaybackState(prev => {
-          if (!prev.isPlaying || prev.currentTime >= prev.duration) {
-            playNext(); // Auto-play next track
-            return { ...prev, isPlaying: false, currentTime: 0 };
-          }
-          return { ...prev, currentTime: prev.currentTime + 0.1 };
-        });
-      };
-      
-      intervalRef.current = setInterval(simulateProgress, 100);
     }
-  }, [playbackState.volume, playbackState.isMuted, queue, linearToLogarithmic]);
+  }, [playbackState.volume, playbackState.isMuted, playbackState.isPlaying, queue, linearToLogarithmic]);
 
   const playTrack = useCallback((track: StyleCard, allTracks?: StyleCard[]) => {
     // If allTracks is provided, use it as the new queue
@@ -206,30 +212,39 @@ export const useAudio = () => {
 
   const playNext = useCallback(() => {
     if (currentIndex < queue.length - 1) {
-      playTrackAtIndex(currentIndex + 1);
+      const wasPlaying = playbackState.isPlaying;
+      playTrackAtIndex(currentIndex + 1, undefined, wasPlaying);
     }
-  }, [currentIndex, queue.length, playTrackAtIndex]);
+  }, [currentIndex, queue.length, playTrackAtIndex, playbackState.isPlaying]);
 
   const playPrevious = useCallback(() => {
     if (currentIndex > 0) {
-      playTrackAtIndex(currentIndex - 1);
+      const wasPlaying = playbackState.isPlaying;
+      playTrackAtIndex(currentIndex - 1, undefined, wasPlaying);
     }
-  }, [currentIndex, playTrackAtIndex]);
+  }, [currentIndex, playTrackAtIndex, playbackState.isPlaying]);
 
   const togglePlayPause = useCallback(() => {
-    if (howlRef.current) {
+    if (howlRef.current && playbackState.currentTrack) {
       if (playbackState.isPlaying) {
         howlRef.current.pause();
       } else {
         howlRef.current.play();
       }
+    } else if (playbackState.currentTrack && !howlRef.current) {
+      // If we have a current track but no howl instance, recreate it
+      const currentTrackIndex = queue.findIndex(track => track.id === playbackState.currentTrack?.id);
+      if (currentTrackIndex !== -1) {
+        playTrackAtIndex(currentTrackIndex);
+      }
     } else if (playbackState.currentTrack) {
+      // Fallback for simulation mode
       setPlaybackState(prev => ({
         ...prev,
         isPlaying: !prev.isPlaying,
       }));
     }
-  }, [playbackState.isPlaying, playbackState.currentTrack]);
+  }, [playbackState.isPlaying, playbackState.currentTrack, queue, playTrackAtIndex]);
 
   const seek = useCallback((time: number) => {
     if (howlRef.current) {

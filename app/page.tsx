@@ -5,6 +5,7 @@ import Sidebar from '@/components/Sidebar';
 import DNAPanel from '@/components/DNAPanel';
 import MainContent from '@/components/MainContent';
 import QueuePanel from '@/components/QueuePanel';
+import KeyboardShortcuts from '@/components/KeyboardShortcuts';
 import { useAudio } from '@/hooks/useAudio';
 import { PanelState } from '@/types';
 import { styleCards } from '@/data/styles';
@@ -41,29 +42,117 @@ export default function Home() {
   // Handle keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.code === 'Space' && playbackState.currentTrack) {
-        e.preventDefault();
-        togglePlayPause();
+      // Only handle shortcuts when not typing in input fields
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
       }
-      if (e.code === 'Escape') {
-        if (panelState.isDnaOpen) {
-          setPanelState(prev => ({ ...prev, isDnaOpen: false, activeNavItem: 'home' }));
-        }
+
+      // Prevent default behavior for our custom shortcuts
+      const shortcutKeys = ['Space', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'KeyM', 'KeyQ', 'Escape'];
+      if (shortcutKeys.includes(e.code)) {
+        e.preventDefault();
+      }
+
+      switch (e.code) {
+        // Play/Pause - Spacebar
+        case 'Space':
+          if (playbackState.currentTrack) {
+            togglePlayPause();
+          }
+          break;
+
+        // Previous Track - Left Arrow
+        case 'ArrowLeft':
+          if (currentIndex > 0) {
+            playPrevious();
+          }
+          break;
+
+        // Next Track - Right Arrow
+        case 'ArrowRight':
+          if (currentIndex < queue.length - 1) {
+            playNext();
+          }
+          break;
+
+        // Volume Up - Up Arrow
+        case 'ArrowUp':
+          const newVolumeUp = Math.min(1, playbackState.volume + 0.1);
+          setVolume(newVolumeUp);
+          break;
+
+        // Volume Down - Down Arrow
+        case 'ArrowDown':
+          const newVolumeDown = Math.max(0, playbackState.volume - 0.1);
+          setVolume(newVolumeDown);
+          break;
+
+        // Mute/Unmute - M key
+        case 'KeyM':
+          toggleMute();
+          break;
+
+        // Toggle Queue - Q key
+        case 'KeyQ':
+          if (playbackState.currentTrack) {
+            toggleQueue();
+          }
+          break;
+
+        // Close Panels - Escape
+        case 'Escape':
+          if (isQueueVisible) {
+            hideQueue();
+          } else if (panelState.isDnaOpen) {
+            setPanelState(prev => ({ ...prev, isDnaOpen: false, activeNavItem: 'home' }));
+          }
+          break;
+
+        default:
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [playbackState.currentTrack, togglePlayPause, panelState.isDnaOpen]);
+  }, [
+    playbackState.currentTrack, 
+    playbackState.volume,
+    togglePlayPause, 
+    playNext,
+    playPrevious,
+    setVolume,
+    toggleMute,
+    toggleQueue,
+    hideQueue,
+    panelState.isDnaOpen,
+    isQueueVisible,
+    currentIndex,
+    queue.length
+  ]);
 
   const handleNavItemClick = (item: 'create' | 'home' | 'search' | 'library' | 'dna') => {
     if (item === 'dna') {
-      setPanelState(prev => ({ 
-        ...prev, 
-        isDnaOpen: true, 
-        activeNavItem: item,
-        isMainContentOpen: true 
-      }));
+      // Toggle DNA panel - if it's already open and DNA is active, close it
+      setPanelState(prev => {
+        if (prev.isDnaOpen && prev.activeNavItem === 'dna') {
+          // DNA panel is open and DNA is active, so close it
+          return {
+            ...prev,
+            isDnaOpen: false,
+            activeNavItem: 'home', // Switch to home when closing
+            isMainContentOpen: true
+          };
+        } else {
+          // DNA panel is closed or another tab is active, so open DNA panel
+          return {
+            ...prev,
+            isDnaOpen: true,
+            activeNavItem: item,
+            isMainContentOpen: true
+          };
+        }
+      });
     } else if (item === 'create') {
       // Point 2: Clicking "+" icon reopens the right panel/modal
       setPanelState(prev => ({ 
@@ -238,6 +327,9 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
+
+      {/* Keyboard Shortcuts */}
+      <KeyboardShortcuts />
     </main>
   );
 }
