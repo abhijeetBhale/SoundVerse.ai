@@ -8,88 +8,62 @@
 /* PowerGrotesk Font - Local fonts from /fonts directory */
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800;900&display=swap');
 
-/* Power Grotesk Trial Fonts */
+/* Power Grotesk Trial Fonts - Simplified paths for production */
 @font-face {
-  font-family: 'Power Grotesk';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Regular.woff2') format('woff2');
-  font-weight: 400;
+  font-family: 'PowerGrotesk';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Regular.woff2') format('woff2'),
+       url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-TTF/PowerGroteskTrial-Regular.ttf') format('truetype');
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Power Grotesk';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Medium.woff2') format('woff2');
+  font-family: 'PowerGrotesk';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Medium.woff2') format('woff2'),
+       url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-TTF/PowerGroteskTrial-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Power Grotesk';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Bold.woff2') format('woff2');
+  font-family: 'PowerGrotesk';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Bold.woff2') format('woff2'),
+       url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-TTF/PowerGroteskTrial-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Power Grotesk';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Heavy.woff2') format('woff2');
+  font-family: 'PowerGrotesk';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Heavy.woff2') format('woff2'),
+       url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-TTF/PowerGroteskTrial-Heavy.ttf') format('truetype');
   font-weight: 800;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Power Grotesk';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-UltraBold.woff2') format('woff2');
+  font-family: 'PowerGrotesk';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-UltraBold.woff2') format('woff2'),
+       url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-TTF/PowerGroteskTrial-UltraBold.ttf') format('truetype');
   font-weight: 900;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Power Grotesk';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Black.woff2') format('woff2');
+  font-family: 'PowerGrotesk';
+  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Black.woff2') format('woff2'),
+       url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-TTF/PowerGroteskTrial-Black.ttf') format('truetype');
   font-weight: 950;
   font-style: normal;
   font-display: swap;
 }
 
-/* Power Grotesk Variable - using Heavy weight as base */
-@font-face {
-  font-family: 'Power Grotesk Variable';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Heavy.woff2') format('woff2');
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-}
 
-/* Additional Power Grotesk Variable weights for better coverage */
-@font-face {
-  font-family: 'Power Grotesk Variable';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-UltraBold.woff2') format('woff2');
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Power Grotesk Variable';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Black.woff2') format('woff2');
-  font-weight: 950;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Power Grotesk Variable';
-  src: url('/fonts/PTF-PowerGrotesk-Trial Fonts/PTF-PowerGrotesk-Trial Fonts/PowerGroteskTrial-WOFF2+HTML/PowerGroteskTrial-Regular.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
 
 * {
   box-sizing: border-box;
@@ -121,15 +95,15 @@ a {
   }
 }
 
-/* PowerGrotesk utility classes */
+/* PowerGrotesk utility classes - Updated for production */
 .font-power-grotesk {
-  font-family: 'Power Grotesk', 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-family: 'PowerGrotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   font-feature-settings: "kern" 1, "liga" 1;
   font-display: swap;
 }
 
 .font-power-grotesk-variable {
-  font-family: 'Power Grotesk Variable', 'Power Grotesk', 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  font-family: 'PowerGrotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif !important;
   font-feature-settings: "kern" 1, "liga" 1;
   font-display: swap;
 }
@@ -464,4 +438,45 @@ textarea:focus-visible {
 .time-display {
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum";
+}
+/* Force font loading for production deployment */
+.force-powergrotesk {
+  font-family: 'PowerGrotesk' !important;
+}
+
+.force-powergrotesk::before {
+  content: '';
+  font-family: 'PowerGrotesk';
+  font-weight: 300;
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
+}
+
+.force-powergrotesk::after {
+  content: '';
+  font-family: 'PowerGrotesk';
+  font-weight: 900;
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
+}
+
+/* Ensure fonts are loaded on page load */
+body::before {
+  content: 'PowerGrotesk';
+  font-family: 'PowerGrotesk';
+  font-weight: 300;
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
+}
+
+body::after {
+  content: 'PowerGrotesk';
+  font-family: 'PowerGrotesk';
+  font-weight: 900;
+  position: absolute;
+  left: -9999px;
+  visibility: hidden;
 }

@@ -194,8 +194,8 @@ const MainContent: React.FC<MainContentProps> = ({
                     />
 
                     {/* Large Artist Name with clean text */}
-                    <h1 className="mb-6 lg:mb-10 font-power-grotesk-variable relative lg:-ml-2" style={{
-                      fontFamily: 'Power Grotesk Variable, Power Grotesk, Space Grotesk, Inter, system-ui, sans-serif',
+                    <h1 className="mb-6 lg:mb-10 font-power-grotesk-variable force-powergrotesk relative lg:-ml-2" style={{
+                      fontFamily: 'PowerGrotesk, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
                       fontWeight: 800,
                       fontStyle: 'normal',
                       fontSize: 'clamp(48px, 8vw, 100px)',
