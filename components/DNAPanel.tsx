@@ -222,7 +222,7 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
         {/* Big Bottom Create Button with Gradient */}
         <div className="p-6 flex justify-center">
           <button 
-            className="py-4 text-white rounded-full font-bold text-lg hover:opacity-90 hover:shadow-lg glow-on-hover flex items-center justify-center"
+            className="font-inter text-[20px] font-[700] leading-[22px] tracking-[0] text-center align-middle py-4 text-white rounded-full hover:opacity-90 hover:shadow-lg glow-on-hover flex items-center justify-center"
             style={{
               background: 'linear-gradient(45deg, #9730EF 0%, #5937EE 50%, #7456EC 100%)',
               borderRadius: '50px',

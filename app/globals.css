@@ -221,33 +221,33 @@ textarea:focus-visible {
 
 /* Custom responsive breakpoints for Chrome DevTools devices */
 @media (max-width: 374px) {
-  .xs\:text-4xl { font-size: 2.25rem; }
-  .xs\:text-6xl { font-size: 3.75rem; }
-  .xs\:text-base { font-size: 1rem; }
-  .xs\:text-[16px] { font-size: 16px; }
-  .xs\:leading-[24px] { line-height: 24px; }
-  .xs\:px-[20px] { padding-left: 20px; padding-right: 20px; }
-  .xs\:py-[10px] { padding-top: 10px; padding-bottom: 10px; }
-  .xs\:min-w-[180px] { min-width: 180px; }
-  .xs\:max-w-md { max-width: 28rem; }
-  .xs\:flex-row { flex-direction: row; }
-  .xs\:w-auto { width: auto; }
-  .xs\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .xs-text-4xl { font-size: 2.25rem; }
+  .xs-text-6xl { font-size: 3.75rem; }
+  .xs-text-base { font-size: 1rem; }
+  .xs-text-16px { font-size: 16px; }
+  .xs-leading-24px { line-height: 24px; }
+  .xs-px-20px { padding-left: 20px; padding-right: 20px; }
+  .xs-py-10px { padding-top: 10px; padding-bottom: 10px; }
+  .xs-min-w-180px { min-width: 180px; }
+  .xs-max-w-md { max-width: 28rem; }
+  .xs-flex-row { flex-direction: row; }
+  .xs-w-auto { width: auto; }
+  .xs-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (min-width: 375px) {
-  .xs\:text-4xl { font-size: 2.25rem; }
-  .xs\:text-6xl { font-size: 3.75rem; }
-  .xs\:text-base { font-size: 1rem; }
-  .xs\:text-[16px] { font-size: 16px; }
-  .xs\:leading-[24px] { line-height: 24px; }
-  .xs\:px-[20px] { padding-left: 20px; padding-right: 20px; }
-  .xs\:py-[10px] { padding-top: 10px; padding-bottom: 10px; }
-  .xs\:min-w-[180px] { min-width: 180px; }
-  .xs\:max-w-md { max-width: 28rem; }
-  .xs\:flex-row { flex-direction: row; }
-  .xs\:w-auto { width: auto; }
-  .xs\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .xs-text-4xl { font-size: 2.25rem; }
+  .xs-text-6xl { font-size: 3.75rem; }
+  .xs-text-base { font-size: 1rem; }
+  .xs-text-16px { font-size: 16px; }
+  .xs-leading-24px { line-height: 24px; }
+  .xs-px-20px { padding-left: 20px; padding-right: 20px; }
+  .xs-py-10px { padding-top: 10px; padding-bottom: 10px; }
+  .xs-min-w-180px { min-width: 180px; }
+  .xs-max-w-md { max-width: 28rem; }
+  .xs-flex-row { flex-direction: row; }
+  .xs-w-auto { width: auto; }
+  .xs-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* iPhone SE and similar small devices */
@@ -364,3 +364,75 @@ textarea:focus-visible {
 .animate-slide-up { animation: slide-up 0.8s ease-out; }
 .animate-player-slide-in { animation: player-slide-in 0.3s ease-out; }
 .animate-player-slide-out { animation: player-slide-out 0.3s ease-in; }
+
+/* Smooth Progress Bar Animations */
+.progress-bar {
+  transition: width 0.1s linear;
+  will-change: width;
+  min-height: 8px;
+}
+
+.progress-bar-dragging {
+  transition: none;
+}
+
+.progress-handle {
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+  will-change: opacity, transform;
+  z-index: 10;
+}
+
+.progress-handle-dragging {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1.1) !important;
+}
+
+/* Ensure progress bar track is always visible */
+.progress-track {
+  position: relative;
+  background: #1f2937;
+  border-radius: 9999px;
+  overflow: visible;
+}
+
+.progress-track::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1f2937;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+.progress-fill {
+  position: relative;
+  z-index: 2;
+  border-radius: inherit;
+  min-width: 0;
+}
+
+/* Smooth volume bar animations */
+.volume-bar {
+  transition: width 0.15s ease-out;
+  will-change: width;
+}
+
+.volume-bar-dragging {
+  transition: none;
+}
+
+/* Hardware acceleration for smooth animations */
+.hw-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth time display updates */
+.time-display {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}

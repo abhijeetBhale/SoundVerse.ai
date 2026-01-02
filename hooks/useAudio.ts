@@ -26,7 +26,7 @@ export const useAudio = () => {
   const [volumeBeforeMute, setVolumeBeforeMute] = useState(0.7);
 
   const howlRef = useRef<Howl | null>(null);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const animationRef = useRef<number | null>(null);
 
   // Convert linear volume (0-1) to logarithmic volume for audio
   // This creates a more natural volume curve where:
@@ -41,30 +41,44 @@ export const useAudio = () => {
   }, []);
 
   const updateTime = useCallback(() => {
-    if (howlRef.current && playbackState.isPlaying) {
+    if (howlRef.current) {
       const currentTime = howlRef.current.seek() as number;
-      setPlaybackState(prev => ({
-        ...prev,
-        currentTime: currentTime || 0,
-      }));
+      if (typeof currentTime === 'number' && currentTime >= 0) {
+        setPlaybackState(prev => ({
+          ...prev,
+          currentTime: currentTime,
+        }));
+      }
     }
-  }, [playbackState.isPlaying]);
+  }, []);
 
   useEffect(() => {
-    if (playbackState.isPlaying) {
-      intervalRef.current = setInterval(updateTime, 100);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
+    const startTimeUpdates = () => {
+      const updateLoop = () => {
+        updateTime();
+        animationRef.current = requestAnimationFrame(updateLoop);
+      };
+      
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
       }
-    }
+      animationRef.current = requestAnimationFrame(updateLoop);
+    };
 
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+    const stopTimeUpdates = () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
       }
     };
+
+    if (playbackState.isPlaying) {
+      startTimeUpdates();
+    } else {
+      stopTimeUpdates();
+    }
+
+    return stopTimeUpdates;
   }, [playbackState.isPlaying, updateTime]);
 
   const playTrackAtIndex = useCallback((index: number, trackQueue?: StyleCard[], shouldPlay: boolean = true) => {
@@ -129,12 +143,13 @@ export const useAudio = () => {
               playNext(); // Auto-play next track
               return { ...prev, isPlaying: false, currentTime: 0 };
             }
-            return { ...prev, currentTime: prev.currentTime + 0.1 };
+            return { ...prev, currentTime: prev.currentTime + (1/60) }; // 60fps updates
           });
         };
         
         if (shouldPlay && wasPlaying) {
-          intervalRef.current = setInterval(simulateProgress, 100);
+          const simulationInterval = setInterval(simulateProgress, 16); // ~60fps
+          animationRef.current = simulationInterval as any;
         }
       }
     });
@@ -171,11 +186,12 @@ export const useAudio = () => {
               playNext(); // Auto-play next track
               return { ...prev, isPlaying: false, currentTime: 0 };
             }
-            return { ...prev, currentTime: prev.currentTime + 0.1 };
+            return { ...prev, currentTime: prev.currentTime + (1/60) }; // 60fps updates
           });
         };
         
-        intervalRef.current = setInterval(simulateProgress, 100);
+        const simulationInterval = setInterval(simulateProgress, 16); // ~60fps
+        animationRef.current = simulationInterval as any;
       }
     } else {
       // Set the track but don't start playing
@@ -247,14 +263,18 @@ export const useAudio = () => {
   }, [playbackState.isPlaying, playbackState.currentTrack, queue, playTrackAtIndex]);
 
   const seek = useCallback((time: number) => {
+    const clampedTime = Math.max(0, Math.min(time, playbackState.duration));
+    
     if (howlRef.current) {
-      howlRef.current.seek(time);
+      howlRef.current.seek(clampedTime);
     }
+    
+    // Immediately update the state to prevent jumping
     setPlaybackState(prev => ({
       ...prev,
-      currentTime: time,
+      currentTime: clampedTime,
     }));
-  }, []);
+  }, [playbackState.duration]);
 
   const setVolume = useCallback((volume: number) => {
     // Convert the linear volume (0-1) to logarithmic for actual audio playback
@@ -317,9 +337,12 @@ export const useAudio = () => {
       howlRef.current = null;
     }
 
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+    if (animationRef.current) {
+      if (typeof animationRef.current === 'number') {
+        cancelAnimationFrame(animationRef.current);
+        clearInterval(animationRef.current);
+      }
+      animationRef.current = null;
     }
 
     setPlaybackState(prev => ({
@@ -380,8 +403,13 @@ export const useAudio = () => {
         howlRef.current.stop();
         howlRef.current.unload();
       }
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
+      if (animationRef.current) {
+        if (typeof animationRef.current === 'number') {
+          // Could be either requestAnimationFrame or setInterval
+          cancelAnimationFrame(animationRef.current);
+          clearInterval(animationRef.current);
+        }
+        animationRef.current = null;
       }
     };
   }, []);

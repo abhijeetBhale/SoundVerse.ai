@@ -87,13 +87,15 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
     setIsDraggingVolume(false);
   }, []);
 
-  // Improved seek handling with smooth dragging
+  // Simplified seek handling - immediate seek on interaction
   const handleSeekInteraction = useCallback((clientX: number) => {
     if (!seekRef.current) return;
     
     const rect = seekRef.current.getBoundingClientRect();
     const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
     const newTime = percent * duration;
+    
+    // Immediately seek to the new position
     onSeek(newTime);
   }, [onSeek, duration]);
 
@@ -142,6 +144,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
     };
   }, [isDraggingSeek, handleSeekMouseMove, handleSeekMouseUp]);
 
+  // Simple progress calculation - always use actual current time
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   return (
@@ -234,7 +237,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
 
             {/* Progress Bar */}
             <div className="flex items-center space-x-2 sm:space-x-3 w-full">
-              <span className="text-xs text-text-secondary min-w-[30px] sm:min-w-[35px] font-mono">
+              <span className="text-xs text-text-secondary min-w-[30px] sm:min-w-[35px] font-mono time-display">
                 {formatTime(currentTime)}
               </span>
               <div
@@ -242,16 +245,20 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                 className="flex-1 h-2 bg-gray-900 rounded-full cursor-pointer group relative"
                 onMouseDown={handleSeekMouseDown}
               >
+                {/* Progress fill */}
                 <div
-                  className="h-full bg-gradient-to-r from-purple-600 to-purple-700 rounded-full transition-all duration-150 group-hover:from-purple-500 group-hover:to-purple-600 relative"
-                  style={{ width: `${progress}%` }}
+                  className="h-full bg-gradient-to-r from-purple-600 to-purple-700 rounded-full group-hover:from-purple-500 group-hover:to-purple-600 relative transition-none"
+                  style={{ 
+                    width: `${Math.max(0, Math.min(100, progress))}%`
+                  }}
                 >
-                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg transition-opacity duration-200 ${
-                    isDraggingSeek ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                  {/* Progress handle */}
+                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg transition-all duration-200 ${
+                    isDraggingSeek || progress > 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </div>
               </div>
-              <span className="text-xs text-text-secondary min-w-[30px] sm:min-w-[35px] font-mono">
+              <span className="text-xs text-text-secondary min-w-[30px] sm:min-w-[35px] font-mono time-display">
                 {formatTime(duration)}
               </span>
             </div>

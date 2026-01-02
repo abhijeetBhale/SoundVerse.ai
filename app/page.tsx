@@ -5,7 +5,6 @@ import Sidebar from '@/components/Sidebar';
 import DNAPanel from '@/components/DNAPanel';
 import MainContent from '@/components/MainContent';
 import QueuePanel from '@/components/QueuePanel';
-import KeyboardShortcuts from '@/components/KeyboardShortcuts';
 import { useAudio } from '@/hooks/useAudio';
 import { PanelState } from '@/types';
 import { styleCards } from '@/data/styles';
@@ -303,17 +302,17 @@ export default function Home() {
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col xs:flex-row gap-3 sm:gap-4 justify-center items-center animate-slide-up w-full max-w-xs xs:max-w-md sm:max-w-none" style={{ animationDelay: '0.3s' }}>
+            <div className="flex flex-row gap-3 sm:gap-4 justify-center items-center animate-slide-up w-full max-w-xs sm:max-w-md lg:max-w-none" style={{ animationDelay: '0.3s' }}>
               <button
                 onClick={() => handleNavItemClick('home')}
-                className="bg-[radial-gradient(rgb(166,51,238),rgb(105,39,211),rgb(62,34,175),rgb(42,31,90))] border border-[1.6px] border-[#a855f7] rounded-full text-white font-inter text-[14px] xs:text-[16px] sm:text-[18px] font-[700] leading-[20px] xs:leading-[24px] sm:leading-[28px] px-[16px] xs:px-[20px] sm:px-[24px] py-[8px] xs:py-[10px] sm:py-[12px] text-center transition-all duration-200 hover:shadow-lg hover:scale-105 w-full xs:w-auto min-w-[160px] xs:min-w-[180px] sm:min-w-[200px]"
+                className="bg-[radial-gradient(rgb(166,51,238),rgb(105,39,211),rgb(62,34,175),rgb(42,31,90))] border border-[1.6px] border-[#a855f7] rounded-full text-white font-inter text-[14px] xs:text-[16px] sm:text-[18px] font-[700] leading-[20px] xs:leading-[24px] sm:leading-[28px] px-[16px] xs:px-[20px] sm:px-[24px] py-[8px] xs:py-[10px] sm:py-[12px] text-center transition-all duration-300 ease-out hover:shadow-2xl hover:shadow-purple-500/25 hover:scale-105 hover:-translate-y-1 min-w-[160px] xs:min-w-[180px] sm:min-w-[200px]"
               >
                 Discover Creators
               </button>
               
               <button
                 onClick={() => handleNavItemClick('dna')}
-                className="bg-gradient-to-r from-[rgb(0,108,59)] via-[rgb(0,170,101)] via-[rgb(0,190,119)] to-[rgb(27,217,146)] border border-[1.6px] border-[#22c55e] rounded-full text-white font-inter text-[14px] xs:text-[16px] sm:text-[18px] font-[700] leading-[20px] xs:leading-[24px] sm:leading-[28px] px-[16px] xs:px-[20px] sm:px-[24px] py-[8px] xs:py-[10px] sm:py-[12px] text-center transition-all duration-200 hover:shadow-lg hover:scale-105 w-full xs:w-auto min-w-[160px] xs:min-w-[180px] sm:min-w-[200px]"
+                className="bg-gradient-to-r from-[rgb(0,108,59)] via-[rgb(0,170,101)] via-[rgb(0,190,119)] to-[rgb(27,217,146)] border border-[1.6px] border-[#22c55e] rounded-full text-white font-inter text-[14px] xs:text-[16px] sm:text-[18px] font-[700] leading-[20px] xs:leading-[24px] sm:leading-[28px] px-[16px] xs:px-[20px] sm:px-[24px] py-[8px] xs:py-[10px] sm:py-[12px] text-center transition-all duration-300 ease-out hover:shadow-2xl hover:shadow-green-500/25 hover:scale-105 hover:-translate-y-1 min-w-[160px] xs:min-w-[180px] sm:min-w-[200px]"
               >
                 Build DNA
               </button>
@@ -327,9 +326,6 @@ export default function Home() {
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600/5 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
       </div>
-
-      {/* Keyboard Shortcuts */}
-      <KeyboardShortcuts />
     </main>
   );
 }

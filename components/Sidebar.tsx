@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { PlusCircle, Home, Search, Library, User } from 'lucide-react';
+import { PlusCircle, Home, Search, Library } from 'lucide-react';
 import { getUIImage } from '@/assets/images';
 
 interface SidebarProps {
@@ -84,14 +84,15 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
       {/* Profile */}
       <div className="mt-auto">
         <button 
-          className="w-8 h-8 sm:w-42 sm:h-42 rounded-full overflow-hidden hover:scale-105 transition-transform duration-200 flex items-center justify-center relative"
+          className="rounded-full overflow-hidden hover:scale-105 transition-transform duration-200 flex items-center justify-center relative bg-gray-800"
+          style={{ width: '42px', height: '42px' }}
           aria-label="Profile"
           title="Profile"
         >
           <img
-            src="/assets/images/profile-image.jpg"
+            src={getUIImage('profileImage')}
             alt="Profile"
-            className="w-full h-full object-cover absolute inset-0"
+            className="w-full h-full object-cover rounded-full"
             onLoad={() => {
               // Image loaded successfully
               console.log('Profile image loaded successfully');
@@ -103,8 +104,6 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
               target.style.display = 'none';
             }}
           />
-          {/* Fallback User icon - will be visible if image fails to load */}
-          <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
         </button>
       </div>
     </div>
