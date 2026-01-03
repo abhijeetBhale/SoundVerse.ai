@@ -14,7 +14,7 @@ export const styleCards: StyleCard[] = [
   {
     id: 'fred-again',
     title: 'Victory Lap',
-    description: 'Fred again.. x Skepta x PlaqueBoyMax - Electronic, Energetic',
+    description: 'Fred again x Skepta x PlaqueBoyMax - Electronic, Energetic',
     imageUrl: styleImages['big-room'],
     audioUrl: '/audio/Fred again.. x Skepta x PlaqueBoyMax - Victory Lap.mp3',
     tags: ['Electronic', 'UK Garage', 'Energetic'],

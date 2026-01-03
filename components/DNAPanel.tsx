@@ -37,10 +37,9 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        {/* Content - Scrollable */}
+        {/* Content */}
         <div className="flex-1 px-6 pt-1 overflow-y-auto scrollbar-hide">
           <div className="space-y-8">
-            {/* Core Style / Signature Sound Toggle Tabs */}
             <div className="flex justify-center space-x-3">
               <button
                 onClick={() => setActiveTab('core')}
@@ -75,8 +74,6 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 Signature Sound
               </button>
             </div>
-
-            {/* Attach Model Placeholder Tile */}
             <div className="text-center">
               <p className="text-sm text-gray-400 mb-4">Attach Model</p>
               <button 
@@ -99,8 +96,6 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 </div>
               </button>
             </div>
-
-            {/* Select the Output Buttons */}
             <div>
               <p className="font-inter text-[10px] font-[400] leading-[1] tracking-[0.05em] text-center text-gray-400 mb-4">Select the output</p>
               <div className="flex justify-center gap-2">
@@ -125,8 +120,6 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 ))}
               </div>
             </div>
-
-            {/* Textarea for Lyrics with Character Counter */}
             <div>
               <div className="flex justify-center">
                 <div className="flex" style={{ width: '304px', gap: '4px' }}>
@@ -185,8 +178,6 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                   </div>
                 </div>
               </div>
-
-              {/* Help me write and Clear Buttons - Moved closer to textarea */}
               <div className="flex justify-center mt-3">
                 <div className="flex" style={{ width: '304px', justifyContent: 'flex-start', gap: '12px' }}>
                   <button 
@@ -218,8 +209,6 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
 
           </div>
         </div>
-
-        {/* Big Bottom Create Button with Gradient */}
         <div className="p-6 flex justify-center">
           <button 
             className="font-inter text-[20px] font-[700] leading-[22px] tracking-[0] text-center align-middle py-4 text-white rounded-full hover:opacity-90 hover:shadow-lg glow-on-hover flex items-center justify-center"
@@ -231,7 +220,6 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
               transition: 'all 300ms ease-out'
             }}
             onClick={() => {
-              // Smart animate functionality can be added here
               console.log('Create button clicked - Navigate to: None');
             }}
           >

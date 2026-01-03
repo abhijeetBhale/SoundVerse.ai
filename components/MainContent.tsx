@@ -109,7 +109,7 @@ const MainContent: React.FC<MainContentProps> = ({
           <div 
             className="flex-1 overflow-y-auto scrollbar-hide"
             style={{ 
-              paddingBottom: currentTrack ? '24px' : '24px', // Remove extra padding since player is now inside
+              paddingBottom: currentTrack ? '100px' : '24px', // Reduced padding since player is smaller
               height: 'calc(100vh - 120px)' // Ensure proper height calculation
             }}
           >

@@ -187,7 +187,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
 
           {/* Controls */}
           <div className="flex flex-col items-center space-y-3 flex-1 max-w-lg">
-            <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="flex items-center space-x-3 sm:space-x-4 ml-10">
               <button
                 onClick={onPrevious}
                 disabled={!hasPrevious}

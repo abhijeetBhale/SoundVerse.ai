@@ -38,67 +38,59 @@ export default function Home() {
     removeFromQueue,
   } = useAudio();
 
-  // Handle keyboard shortcuts
+  // In this we Handle the Keyshort Cuts 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Only handle shortcuts when not typing in input fields
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
         return;
       }
 
-      // Prevent default behavior for our custom shortcuts
+      // Here Defined the Shortcuts to prevent the default actions 
       const shortcutKeys = ['Space', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'KeyM', 'KeyQ', 'Escape'];
       if (shortcutKeys.includes(e.code)) {
         e.preventDefault();
       }
 
+      // This is the switch case for handling the shortcuts
       switch (e.code) {
-        // Play/Pause - Spacebar
         case 'Space':
           if (playbackState.currentTrack) {
             togglePlayPause();
           }
           break;
 
-        // Previous Track - Left Arrow
         case 'ArrowLeft':
           if (currentIndex > 0) {
             playPrevious();
           }
           break;
 
-        // Next Track - Right Arrow
         case 'ArrowRight':
           if (currentIndex < queue.length - 1) {
             playNext();
           }
           break;
 
-        // Volume Up - Up Arrow
         case 'ArrowUp':
           const newVolumeUp = Math.min(1, playbackState.volume + 0.1);
           setVolume(newVolumeUp);
           break;
 
-        // Volume Down - Down Arrow
         case 'ArrowDown':
           const newVolumeDown = Math.max(0, playbackState.volume - 0.1);
           setVolume(newVolumeDown);
           break;
 
-        // Mute/Unmute - M key
         case 'KeyM':
           toggleMute();
           break;
 
-        // Toggle Queue - Q key
         case 'KeyQ':
           if (playbackState.currentTrack) {
             toggleQueue();
           }
           break;
 
-        // Close Panels - Escape
         case 'Escape':
           if (isQueueVisible) {
             hideQueue();
@@ -132,18 +124,15 @@ export default function Home() {
 
   const handleNavItemClick = (item: 'create' | 'home' | 'search' | 'library' | 'dna') => {
     if (item === 'dna') {
-      // Toggle DNA panel - if it's already open and DNA is active, close it
       setPanelState(prev => {
         if (prev.isDnaOpen && prev.activeNavItem === 'dna') {
-          // DNA panel is open and DNA is active, so close it
           return {
             ...prev,
             isDnaOpen: false,
-            activeNavItem: 'home', // Switch to home when closing
+            activeNavItem: 'home', 
             isMainContentOpen: true
           };
         } else {
-          // DNA panel is closed or another tab is active, so open DNA panel
           return {
             ...prev,
             isDnaOpen: true,
@@ -153,12 +142,13 @@ export default function Home() {
         }
       });
     } else if (item === 'create') {
-      // Point 2: Clicking "+" icon reopens the right panel/modal
+      // This is from the document {4. Panel Behaviour}
+      // Clicking "+" icon reopens the right panel/modal
       setPanelState(prev => ({ 
         ...prev, 
         isDnaOpen: false, 
         activeNavItem: item,
-        isMainContentOpen: true // Reopen main content when clicking create/+
+        isMainContentOpen: true 
       }));
     } else {
       setPanelState(prev => ({ 
@@ -170,8 +160,8 @@ export default function Home() {
     }
   };
 
+  // In this the Queue for the song is set 
   const handlePlayTrack = (track: any) => {
-    // When playing a track, set all style cards as the queue
     playTrack(track, styleCards);
   };
 
@@ -184,7 +174,6 @@ export default function Home() {
   };
 
   const handleLogoClick = () => {
-    // Close main content to show the "Meet DNA" empty state
     setPanelState(prev => ({ 
       ...prev, 
       isMainContentOpen: false, 
@@ -193,8 +182,9 @@ export default function Home() {
     }));
   };
 
+  // This is from the document {3. Global Playback Player}
+  // Continue playing even if panels are opened/closed. 
   const handleClosePlayer = () => {
-    // Only hide the player UI, don't stop the music
     hidePlayer();
   };
 
@@ -251,7 +241,7 @@ export default function Home() {
         isPlaying={playbackState.isPlaying}
       />
 
-      {/* Empty State when main content is closed - Point 1.2 */}
+      {/* Empty State when main content is closed */}
       {!panelState.isMainContentOpen && (
         <div 
           className={`flex items-center justify-center min-h-screen transition-all duration-500 ease-out ${
@@ -303,7 +293,7 @@ export default function Home() {
               Soundverse DNA empowers artists to create their sonic identity while enabling others to generate unique music in their style, ensuring they get paid.
             </p>
 
-            {/* Action Buttons */}
+            {/* Action Buttons - Horizontally Arranged */}
             <div className="flex flex-row gap-3 sm:gap-4 justify-center items-center animate-slide-up w-full max-w-xs sm:max-w-md lg:max-w-none" style={{ animationDelay: '0.3s' }}>
               <button
                 onClick={() => handleNavItemClick('home')}

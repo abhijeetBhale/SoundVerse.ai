@@ -1,6 +1,4 @@
-// Image assets configuration
-// Place your actual image files in the public/assets/images/ folder
-// and they will be automatically served by Next.js
+// Here are all the assets configuration, where all the demo images are placed and can be changed in the future as per the need
 
 export const styleImages = {
   dubstep: '/assets/images/dubstep.png',
@@ -28,19 +26,19 @@ export const placeholderImages = {
   edm: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSJ1cmwoI2dyYWRpZW50MCkiLz4KPGR1ZnM+CjxsaW5lYXJHcmFkaWVudCBpZD0iZ3JhZGllbnQwIiB4MT0iMCIgeTE9IjAiIHgyPSIyMDAiIHkyPSIyMDAiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIj4KPHN0b3Agc3RvcC1jb2xvcj0iIzYzNjZmMSIvPgo8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4YjVjZjYiLz4KPC9saW5lYXJHcmFkaWVudD4KPC9kZWZzPgo8L3N2Zz4K'
 } as const;
 
-// Helper function to get image URL with fallback
+// Function to get image URL with fallback
 export const getStyleImage = (styleId: keyof typeof styleImages): string => {
   // In production, you can add logic to check if the actual image exists
   // For now, we'll use the actual image paths
   return styleImages[styleId];
 };
 
-// Helper function to get UI image with fallback
+// Function to get UI image with fallback
 export const getUIImage = (imageId: keyof typeof uiImages): string => {
   return uiImages[imageId];
 };
 
-// Helper function to get UI image with placeholder fallback
+// Function to get UI image with placeholder fallback
 export const getUIImageWithFallback = (imageId: keyof typeof uiImages): string => {
   // For profile image, provide a fallback
   if (imageId === 'profileImage') {
@@ -49,7 +47,7 @@ export const getUIImageWithFallback = (imageId: keyof typeof uiImages): string =
   return uiImages[imageId];
 };
 
-// Helper function to get placeholder image (for development/fallback)
+// Function to get placeholder image (for development/fallback)
 export const getPlaceholderImage = (styleId: keyof typeof placeholderImages): string => {
   return placeholderImages[styleId];
 };
