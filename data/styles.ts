@@ -48,6 +48,15 @@ export const styleCards: StyleCard[] = [
     category: 'core'
   },
   {
+    id: 'masego-unhinged',
+    title: 'Unhinged',
+    description: 'Masego - Jazz, Neo-Soul, Smooth',
+    imageUrl: styleImages.folktronica,
+    audioUrl: '/audio/Masego - Unhinged.mp3',
+    tags: ['Jazz', 'Neo-Soul', 'Smooth'],
+    category: 'core'
+  },
+  {
     id: 'the-weeknd',
     title: 'São Paulo',
     description: 'The Weeknd feat. Anitta - Pop, Latin, Smooth',

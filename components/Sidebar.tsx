@@ -19,10 +19,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-full w-12 sm:w-16 bg-dark-bg z-40 flex flex-col items-center py-4 sm:py-6">
+    <div className="fixed left-0 top-0 h-full w-10 sm:w-12 bg-dark-bg z-40 flex flex-col items-center py-3 sm:py-4">
       {/* Logo */}
       <div 
-        className="w-10 h-10 sm:w-53 sm:h-47.66 rounded-lg sm:rounded-xl flex items-center justify-center mb-3 sm:mb-4 cursor-pointer hover:bg-gray-800/20 transition-all duration-200"
+        className="w-8 h-8 sm:w-10 sm:h-10 rounded-md sm:rounded-lg flex items-center justify-center mb-2 sm:mb-3 cursor-pointer hover:bg-gray-800/20 transition-all duration-200"
         onClick={onLogoClick}
         aria-label="Go to Meet DNA page"
         title="Meet DNA"
@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
         <img
           src={getUIImage('logoSoundverseAi')}
           alt="SoundVerse AI"
-          className="w-6 h-6 sm:w-8 sm:h-8 object-contain"
+          className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
           onError={(e) => {
             // If logo fails to load, hide it and show fallback
             console.log('Logo failed to load');
@@ -41,7 +41,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
       </div>
       
       {/* Navigation Items Container with specified dimensions */}
-      <div className="flex flex-col items-center" style={{ width: '100%', maxWidth: '23.22px', height: 'auto', minHeight: '136px' }}>
+      <div className="flex flex-col items-center" style={{ width: '100%', maxWidth: '20px', height: 'auto', minHeight: '120px' }}>
         {/* Navigation Items */}
         <div className="flex flex-col space-y-1 mb-1">
           {navItems.map((item) => {
@@ -50,7 +50,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
               <button
                 key={item.id}
                 onClick={() => onNavItemClick(item.id)}
-                className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl transition-all duration-200 flex items-center justify-center group ${
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg transition-all duration-200 flex items-center justify-center group ${
                   activeNavItem === item.id
                     ? 'bg-[#1C1E1F] text-white'
                     : 'hover:bg-[#1C1E1F] text-text-secondary hover:text-white'
@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
                 aria-label={item.label}
                 title={item.label}
               >
-                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
               </button>
             );
           })}
@@ -68,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
         <div className="flex flex-col items-center">
           <button
             onClick={() => onNavItemClick('dna')}
-            className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl transition-all duration-200 flex items-center justify-center group text-[10px] sm:text-xs font-bold ${
+            className={`w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg transition-all duration-200 flex items-center justify-center group text-[8px] sm:text-[10px] font-bold ${
               activeNavItem === 'dna'
                 ? 'bg-[#1C1E1F] text-white'
                 : 'text-text-secondary hover:text-white hover:bg-[#1C1E1F]'
@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
       <div className="mt-auto">
         <button 
           className="rounded-full overflow-hidden hover:scale-105 transition-transform duration-200 flex items-center justify-center relative bg-gray-800"
-          style={{ width: '42px', height: '42px' }}
+          style={{ width: '32px', height: '32px' }}
           aria-label="Profile"
           title="Profile"
         >

@@ -19,17 +19,20 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
   };
 
   return (
-    <div className="relative p-2"> {/* Outer container with reduced padding for hover background */}
-      {/* Hover Background - Larger than the card */}
+    <div className="relative"> {/* Removed margin-right to use grid gaps */}
+      {/* Hover Background - Same size as the card */}
       <div
         className={`absolute inset-0 rounded-3xl transition-all duration-300 ${
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
           backgroundColor: '#333333', // Grey hover background
-          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-          width: '197px',
-          height: '297px'
+          transform: isHovered ? 'scale(1.01)' : 'scale(1)', // Minimal scale to prevent overlap
+          width: '158px',
+          height: '218px',
+          marginLeft: '-4px',
+          marginTop: '-4px',
+          borderRadius: '6px'
         }}
       />
       
@@ -50,14 +53,14 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
         }}
         style={{
           backgroundColor: 'transparent', // Remove black background
-          height: '281.65px',
-          width: '182.65px'
+          height: '220px',
+          width: '150px'
         }}
       >
       {/* Image Container - Square dimensions */}
       <div className="relative" style={{ 
-        width: '182.65px',
-        height: '180px', 
+        width: '150px',
+        height: '140px', 
         borderRadius: '4px',
         overflow: 'hidden'
       }}>
@@ -113,7 +116,7 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
       {/* Content - No background, centered text */}
       <div className="p-4 flex-1 flex flex-col justify-center items-center">
         <div className="text-center">
-          <h3 className="font-power text-[20px] font-[400] leading-[1.4] tracking-[0] text-center text-white mb-2 transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis">
+          <h3 className="font-power text-[15px] font-[400] leading-[1.4] tracking-[0] text-center text-white transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis -mt-2">
             {style.title}
           </h3>
           <p className="font-macan text-[13px] font-[400] leading-[1.4] tracking-[0] text-center text-text-secondary line-clamp-2">

@@ -245,8 +245,8 @@ export default function Home() {
       {!panelState.isMainContentOpen && (
         <div 
           className={`flex items-center justify-center min-h-screen transition-all duration-500 ease-out ${
-            panelState.isDnaOpen ? 'ml-96 xl:ml-96 lg:ml-80 md:ml-64 sm:ml-16' : 'ml-12 sm:ml-16'
-          } animate-fade-in px-4 py-8`}
+            panelState.isDnaOpen ? 'ml-[292px]' : 'ml-10 sm:ml-12'
+          } animate-fade-in px-3 py-6`}
         >
           <div 
             className="text-center px-4 sm:px-6 animate-scale-in flex flex-col justify-center items-center max-w-full"
