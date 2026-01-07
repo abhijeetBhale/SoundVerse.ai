@@ -39,7 +39,7 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
 
         {/* Content */}
         <div className="flex-1 px-4 pt-0 overflow-y-auto scrollbar-hide"  style={{height: '200px'}}>
-          <div className="space-y-5">
+          <div className="space-y-5 mt-2">
             <div className="flex justify-center space-x-2">
               <button
                 onClick={() => setActiveTab('core')}
