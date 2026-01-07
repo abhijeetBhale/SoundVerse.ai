@@ -170,7 +170,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
           {/* Track Info */}
           <div className="flex items-center space-x-2 min-w-0 flex-1">
             <div 
-              className="w-8 h-8 rounded-lg flex-shrink-0 bg-gradient-to-br from-purple-600 to-blue-600"
+              className="w-12 h-12 rounded-lg flex-shrink-0 bg-gradient-to-br from-purple-600 to-blue-600"
               style={{
                 backgroundImage: `url(${currentTrack.imageUrl})`,
                 backgroundSize: 'cover',
@@ -178,10 +178,10 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
               }}
             />
             <div className="min-w-0">
-              <h4 className="text-white font-bold text-xs truncate">
+              <h4 className="text-white font-bold text-sm truncate">
                 {currentTrack.title}
               </h4>
-              <p className="text-text-secondary text-xs truncate">
+              <p className="text-text-secondary text-sm truncate">
                 {currentTrack.description.split(' - ')[0]} • {currentTrack.category.toUpperCase()}
               </p>
             </div>
@@ -189,62 +189,62 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
 
           {/* Controls */}
           <div className="flex flex-col items-center space-y-1 flex-1 max-w-md">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3 ml-10">
               <button
                 onClick={onPrevious}
                 disabled={!hasPrevious}
-                className={`w-6 h-6 rounded-full transition-all duration-200 flex items-center justify-center ${
+                className={`w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
                   hasPrevious 
                     ? 'hover:bg-gray-900 text-text-secondary hover:text-white' 
                     : 'text-gray-600 cursor-not-allowed'
                 }`}
                 aria-label="Previous track"
               >
-                <SkipBack className="w-3 h-3 transition-colors" />
+                <SkipBack className="w-4 h-4 transition-colors" />
               </button>
               
               <button
                 onClick={onTogglePlayPause}
-                className="w-8 h-8 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
+                className="w-12 h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
                 aria-label={isPlaying ? `Pause ${currentTrack.title}` : `Play ${currentTrack.title}`}
               >
                 {isPlaying ? (
-                  <Pause className="w-3 h-3 text-black" fill="currentColor" />
+                  <Pause className="w-5 h-5 text-black" fill="currentColor" />
                 ) : (
-                  <Play className="w-3 h-3 text-black ml-0.5" fill="currentColor" />
+                  <Play className="w-5 h-5 text-black ml-0.5" fill="currentColor" />
                 )}
               </button>
               
               <button
                 onClick={onNext}
                 disabled={!hasNext}
-                className={`w-6 h-6 rounded-full transition-all duration-200 flex items-center justify-center ${
+                className={`w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
                   hasNext 
                     ? 'hover:bg-gray-900 text-text-secondary hover:text-white' 
                     : 'text-gray-600 cursor-not-allowed'
                 }`}
                 aria-label="Next track"
               >
-                <SkipForward className="w-3 h-3 transition-colors" />
+                <SkipForward className="w-4 h-4 transition-colors" />
               </button>
 
               <button
                 onClick={onToggleQueue}
-                className="w-6 h-6 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center ml-1"
+                className="w-8 h-8 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center ml-1"
                 aria-label="Show queue"
               >
-                <List className="w-3 h-3 text-text-secondary hover:text-white transition-colors" />
+                <List className="w-4 h-4 text-text-secondary hover:text-white transition-colors" />
               </button>
             </div>
 
             {/* Progress Bar */}
-            <div className="flex items-center space-x-2 w-full">
-              <span className="text-xs text-text-secondary min-w-[25px] font-mono time-display">
+            <div className="flex items-center space-x-3 w-full">
+              <span className="text-sm text-text-secondary min-w-[30px] font-mono time-display">
                 {formatTime(currentTime)}
               </span>
               <div
                 ref={seekRef}
-                className="flex-1 h-1 bg-gray-900 rounded-full cursor-pointer group relative"
+                className="flex-1 h-2 bg-gray-900 rounded-full cursor-pointer group relative"
                 onMouseDown={handleSeekMouseDown}
               >
                 {/* Progress fill */}
@@ -255,34 +255,34 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                   }}
                 >
                   {/* Progress handle */}
-                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg transition-all duration-200 ${
+                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg transition-all duration-200 ${
                     isDraggingSeek || progress > 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </div>
               </div>
-              <span className="text-xs text-text-secondary min-w-[25px] font-mono time-display">
+              <span className="text-sm text-text-secondary min-w-[30px] font-mono time-display">
                 {formatTime(duration)}
               </span>
             </div>
           </div>
 
           {/* Volume */}
-          <div className="hidden md:flex items-center space-x-2 flex-1 justify-end">
+          <div className="hidden md:flex items-center space-x-3 flex-1 justify-end">
             <button
               onClick={onToggleMute}
-              className="w-6 h-6 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
+              className="w-8 h-8 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
               aria-label={isMuted ? 'Unmute' : 'Mute'}
             >
               {isMuted ? (
-                <VolumeX className="w-3 h-3 text-text-secondary hover:text-white transition-colors" />
+                <VolumeX className="w-4 h-4 text-text-secondary hover:text-white transition-colors" />
               ) : (
-                <Volume2 className="w-3 h-3 text-text-secondary hover:text-white transition-colors" />
+                <Volume2 className="w-4 h-4 text-text-secondary hover:text-white transition-colors" />
               )}
             </button>
             <div className="relative">
               <div
                 ref={volumeRef}
-                className="w-16 h-1 bg-gray-900 rounded-full cursor-pointer group relative"
+                className="w-20 h-2 bg-gray-900 rounded-full cursor-pointer group relative"
                 onMouseDown={handleVolumeMouseDown}
               >
                 <div
@@ -292,7 +292,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                     transition: isDraggingVolume ? 'none' : 'width 0.15s ease-out'
                   }}
                 >
-                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full shadow-lg transition-opacity duration-200 ${
+                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg transition-opacity duration-200 ${
                     isDraggingVolume ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </div>

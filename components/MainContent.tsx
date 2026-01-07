@@ -71,56 +71,67 @@ const MainContent: React.FC<MainContentProps> = ({
   return (
     <div 
       className={`fixed top-0 right-0 bottom-0 z-20 transition-all duration-300 ${
-        isDnaOpen ? 'left-[328px]' : 'left-10 sm:left-12'
+        isDnaOpen ? 'left-[300px]' : 'left-8 sm:left-10'
       } ${isOpen ? 'animate-fade-in' : ''}`}
       style={{ 
         backgroundColor: isDnaOpen ? '#0E0E0F' : '#000000',
-        width: isDnaOpen ? 'calc(100vw - 328px)' : 'calc(100vw - 48px)',
+        width: isDnaOpen ? 'calc(100vw - 300px)' : 'calc(100vw - 60px)',
         height: '100vh'
       }}
     >
       <div className={`h-full flex flex-col ${isDnaOpen ? 'p-2 sm:p-4' : ''}`}>
         <div className={`h-full flex flex-col bg-dark-bg ${isDnaOpen ? 'rounded-[18px]' : ''}`}>
-        {/* Header */}
-        <div className="flex items-center justify-between p-3 md:p-4 -mt-3">
-          <div className="flex items-center">
-            <button
-              onClick={() => {
-                if (isDnaOpen && onCollapseDnaPanel) {
-                  onCollapseDnaPanel();
-                } else {
-                  onClose();
-                }
-              }}
-              className="w-8 h-8 md:w-10 md:h-10 rounded-full hover:bg-gray-800 transition-all duration-200 flex items-center justify-center"
-              aria-label={isDnaOpen ? "Collapse DNA panel" : "Go back"}
-            >
-              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 text-white" />
-            </button>
-          </div>
+        
+        {/* Top Left Button - Chevron Left (relative to MainContent) */}
+        <div className="absolute top-4 left-4 z-50">
           <button
-            onClick={onClose}
-            className="w-8 h-8 md:w-10 md:h-10 rounded-full hover:bg-gray-800 transition-all duration-200 flex items-center justify-center"
+            onClick={() => {
+              if (isDnaOpen && onCollapseDnaPanel) {
+                onCollapseDnaPanel();
+              } else {
+                onClose();
+              }
+            }}
+            className="w-10 h-10 rounded-full transition-all duration-200 flex items-center justify-center bg-black/20 backdrop-blur-sm hover:bg-black/40"
+            aria-label={isDnaOpen ? "Collapse DNA panel" : "Go back"}
+          >
+            <ChevronLeft className="w-5 h-5 text-white" />
+          </button>
+        </div>
+
+        {/* Fixed Top Right Button - X Close */}
+        <div className="fixed top-4 right-4 z-50">
+          <button
+            onClick={() => {
+              // If DNA panel is open, close it first
+              if (isDnaOpen && onCollapseDnaPanel) {
+                onCollapseDnaPanel();
+              }
+              // Then close the main content (go to homepage)
+              onClose();
+            }}
+            className="w-10 h-10 rounded-full transition-all duration-200 flex items-center justify-center bg-black/20 backdrop-blur-sm hover:bg-black/40"
             aria-label="Close"
           >
-            <X className="w-4 h-4 md:w-5 md:h-5 text-white" />
+            <X className="w-5 h-5 text-white" />
           </button>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 flex flex-col relative overflow-hidden -mt-2">
+        <div className="flex-1 flex flex-col relative overflow-hidden">
           {/* Scrollable Content Area */}
           <div 
             className="flex-1 overflow-y-auto scrollbar-hide"
             style={{ 
               paddingBottom: currentTrack ? '80px' : '24px', // Reduced padding for smaller player
-              height: 'calc(100vh - 100px)' // Adjusted height calculation
+              height: '100vh', // Full height since no header
+              paddingTop: '20px' // Add top padding for better spacing
             }}
           >
             <div className="p-4 md:p-6">
               <div className="w-full max-w-5xl mx-auto ">
                 {/* Top Section - Artist Info */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start space-y-1 lg:space-y-0 lg:space-x-4 mb-2 gap-1 lg:gap-4 -mt-5">
+                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start space-y-1 lg:space-y-0 lg:space-x-4 mb-2 gap-1 lg:gap-4">
                   {/* Circular Artwork with Waveform */}
                   <div className="relative flex-shrink-0">
                     <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full">
@@ -128,7 +139,7 @@ const MainContent: React.FC<MainContentProps> = ({
                         className="w-full h-full rounded-full bg-dark-bg flex items-center justify-center overflow-hidden"
                         style={{
                           backgroundImage: `url(${getUIImage('audioWave')})`,
-                          backgroundSize: 'cover',
+                          backgroundSize: '150%',
                           backgroundPosition: 'center',
                         }}
                       >
@@ -148,8 +159,8 @@ const MainContent: React.FC<MainContentProps> = ({
                         height: '80px',
                         borderRadius: '50%',
                         background: `radial-gradient(ellipse at center, #1B1330 0%, rgba(27, 19, 48, 0.9) 30%, rgba(27, 19, 48, 0.6) 60%, transparent 100%)`,
-                        filter: 'blur(30px)',
-                        WebkitFilter: 'blur(30px)',
+                        filter: 'blur(24px)',
+                        WebkitFilter: 'blur(24px)',
                         zIndex: 1,
                         animation: 'aurora-shift 6s ease-in-out infinite',
                         opacity: 1,
@@ -167,8 +178,8 @@ const MainContent: React.FC<MainContentProps> = ({
                         height: '80px',
                         borderRadius: '50%',
                         background: `radial-gradient(ellipse at center, #1B1330 0%, rgba(27, 19, 48, 0.8) 40%, rgba(27, 19, 48, 0.5) 70%, transparent 100%)`,
-                        filter: 'blur(25px)',
-                        WebkitFilter: 'blur(25px)',
+                        filter: 'blur(20px)',
+                        WebkitFilter: 'blur(20px)',
                         zIndex: 2,
                         animation: 'aurora-shift 8s ease-in-out infinite reverse',
                         opacity: 0.9,
@@ -186,8 +197,8 @@ const MainContent: React.FC<MainContentProps> = ({
                         height: '80px',
                         borderRadius: '50%',
                         background: `radial-gradient(ellipse at center, #1B1330 0%, rgba(27, 19, 48, 0.7) 50%, transparent 100%)`,
-                        filter: 'blur(15px)',
-                        WebkitFilter: 'blur(15px)',
+                        filter: 'blur(12px)',
+                        WebkitFilter: 'blur(12px)',
                         zIndex: 3,
                         animation: 'aurora-shift 4s ease-in-out infinite',
                         opacity: 0.8,
@@ -198,7 +209,7 @@ const MainContent: React.FC<MainContentProps> = ({
                     />
 
                     {/* Large Artist Name with clean text */}
-                    <h1 className="mb-1 lg:mb-2 text-[100px] font-[800] leading-[61px] tracking-[0] align-middle relative lg:-ml-2 mt-2" style={{
+                    <h1 className="mb-1 lg:mb-2 text-[90px] font-[800] leading-[49px] tracking-[0] align-middle relative lg:-ml-2 mt-2" style={{
                       fontFamily: 'PowerGrotesk',
                       zIndex: 20
                     }}>
@@ -215,7 +226,7 @@ const MainContent: React.FC<MainContentProps> = ({
                     </h1>
 
                     {/* Description */}
-                    <p className="font-inter text-[10px] sm:text-[11px] font-[400] leading-[11px] sm:leading-[12px] tracking-[0] text-text-secondary mb-1 max-w-xl mx-auto lg:mx-0 mt-9" style={{color: '#D9D9D9'}}>
+                    <p className="font-inter text-[12px] sm:text-[11px] font-[400] leading-[11px] sm:leading-[12px] tracking-[0] text-text-secondary mb-1 max-w-[530px] mx-auto lg:mx-0 mt-9 -mr-10" style={{color: '#D9D9D9'}}>
                       EDM visionary known for hit remixes and artist management. 6 Core Styles and 30 Signature Sounds.
                     </p>
 
@@ -236,7 +247,7 @@ const MainContent: React.FC<MainContentProps> = ({
                 </div>
 
                 {/* Separator Line - Only between heading and tabs */}
-                <div className="w-full h-px bg-border-color mb-3"></div>
+                <div className="w-full h-px bg-border-color mb-4"></div>
 
                 {/* Tabs: CORE STYLE / SIGNATURE SOUND */}
                 <div className="flex flex-col sm:flex-row justify-center sm:justify-start space-y-1 sm:space-y-0 sm:space-x-3 mb-2">
@@ -282,8 +293,8 @@ const MainContent: React.FC<MainContentProps> = ({
                       className="animate-scale-in"
                       style={{ 
                         animationDelay: `${index * 0.1}s`,
-                        width: '150px',
-                        height: '220px'
+                        width: '120px',
+                        height: '176px'
                       }}
                     >
                       <StyleCard

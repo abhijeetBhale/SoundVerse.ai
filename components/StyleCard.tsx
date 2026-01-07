@@ -26,13 +26,13 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
-          backgroundColor: '#333333', // Grey hover background
+          backgroundColor: '#212121', // Grey hover background
           transform: isHovered ? 'scale(1.01)' : 'scale(1)', // Minimal scale to prevent overlap
-          width: '158px',
-          height: '218px',
+          width: '188px',
+          height: '262px',
           marginLeft: '-4px',
           marginTop: '-4px',
-          borderRadius: '6px'
+          borderRadius: '6px',
         }}
       />
       
@@ -53,14 +53,15 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
         }}
         style={{
           backgroundColor: 'transparent', // Remove black background
-          height: '220px',
-          width: '150px'
+          height: '176px',
+          width: '120px',
+          // marginBottom: '20px'
         }}
       >
       {/* Image Container - Square dimensions */}
       <div className="relative" style={{ 
-        width: '150px',
-        height: '140px', 
+        width: '180px',
+        height: '180px', 
         borderRadius: '4px',
         overflow: 'hidden'
       }}>
@@ -94,40 +95,26 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
           </button>
         </div>
 
-        {/* Playing Indicator */}
+        {/* Playing Indicator - Removed waveform bars */}
         {isPlaying && (
           <div className="absolute top-3 right-3">
-            <div className="flex space-x-1">
-              {[...Array(4)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-1 bg-white rounded-full waveform-bar shadow-lg"
-                  style={{
-                    height: `${8 + Math.random() * 6}px`,
-                    animationDelay: `${i * 0.1}s`,
-                  }}
-                />
-              ))}
-            </div>
+            {/* Removed the animated waveform bars */}
           </div>
         )}
       </div>
 
       {/* Content - No background, centered text */}
-      <div className="p-4 flex-1 flex flex-col justify-center items-center">
+      <div className="p-4 flex-1 flex flex-col justify-center items-center ml-10">
         <div className="text-center">
-          <h3 className="font-power text-[15px] font-[400] leading-[1.4] tracking-[0] text-center text-white transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis -mt-2">
+          <h3 className="font-power text-[18px] font-[400] leading-[1.4] tracking-[0] text-center text-white transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis -mt-2 ml-5">
             {style.title}
           </h3>
-          <p className="font-macan text-[13px] font-[400] leading-[1.4] tracking-[0] text-center text-text-secondary line-clamp-2">
+          <p className="font-macan text-[11px] font-[400] leading-[1.4] tracking-[0] text-center text-text-secondary line-clamp-2 ml-5" style={{color: '#828282'}}>
             {style.description}
           </p>
         </div>
       </div>
 
-      {/* Hover Glow Effect - Removed as we now have the outer hover background */}
-      
-      {/* Border Glow - Removed as we now have the outer hover background */}
     </div>
     </div>
   );

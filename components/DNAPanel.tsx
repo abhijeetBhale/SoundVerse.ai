@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { X, Plus } from 'lucide-react';
+import { X, Plus, Bold } from 'lucide-react';
 
 interface DNAPanelProps {
   isOpen: boolean;
@@ -23,14 +23,14 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed left-12 top-0 h-full z-30 animate-slide-in" style={{ width: '280px' }}>
+    <div className="fixed left-10 top-0 h-full z-30 animate-slide-in" style={{ width: '260px' }}>
       <div className="flex flex-col h-full bg-dark-bg">
         {/* Header */}
         <div className="flex items-center justify-between p-4 pb-3">
           <h1 className="text-lg font-bold text-white font-power-grotesk">DNA</h1>
           <button
             onClick={onClose}
-            className="w-6 h-6 rounded-md hover:bg-gray-800 transition-all duration-200 flex items-center justify-center"
+            className="w-6 h-6 rounded-md transition-all duration-200 flex items-center justify-center"
             aria-label="Close DNA panel"
           >
             <X className="w-3 h-3 text-text-secondary hover:text-white transition-colors" />
@@ -50,7 +50,7 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 }`}
                 style={{ 
                   width: '110px',
-                  height: '30px', 
+                  height: '24px', 
                   borderRadius: '32px',
                   backgroundColor: activeTab === 'core' ? '#474E54' : '#181A1C'
                 }}
@@ -66,9 +66,9 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 }`}
                 style={{ 
                   width: '110px',
-                  height: '30px', 
+                  height: '24px', 
                   borderRadius: '32px',
-                  backgroundColor: activeTab === 'signature' ? '#474E54' : '#181A1C'
+                  backgroundColor: activeTab === 'signature' ? '#474E54' : '#181A1C',
                 }}
               >
                 Signature Sound
@@ -80,8 +80,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 className="rounded-lg flex items-center justify-center hover:bg-gray-700 transition-all duration-200 group mx-auto"
                 style={{ 
                   backgroundColor: '#181A1C',
-                  width: '70px',
-                  height: '70px',
+                  width: '56px',
+                  height: '56px',
                   marginTop: '-10px'
                 }}
               >
@@ -89,8 +89,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                   className="rounded-full flex items-center justify-center"
                   style={{
                     backgroundColor: '#333537',
-                    width: '20px',
-                    height: '20px'
+                    width: '16px',
+                    height: '16px'
                   }}
                 >
                   <Plus className="w-3 h-3 text-gray-400 group-hover:text-white transition-colors" />
@@ -110,8 +110,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                         : 'text-gray-400 hover:text-white hover:bg-gray-700'
                     }`}
                     style={{ 
-                      width: '91px',
-                      height: '30px', 
+                      width: '73px',
+                      height: '24px', 
                       borderRadius: '32px',
                       backgroundColor: selectedOutput === type ? '#474E54' : '#181A1C'
                     }}
@@ -123,7 +123,7 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
             </div>
             <div>
               <div className="flex justify-center">
-                <div className="flex" style={{ width: '248px', gap: '3px' }}>
+                <div className="flex" style={{ width: '226px', gap: '3px' }}>
                   <button 
                     onClick={() => setInputMode('describe')}
                     className={`font-inter text-[10px] font-[500] leading-[1.4] tracking-[0] text-center align-middle rounded-full transition-all duration-200 whitespace-nowrap flex items-center justify-center ${
@@ -132,8 +132,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                         : 'text-gray-400 hover:text-white hover:bg-gray-700'
                     }`}
                     style={{ 
-                      width: '150px',
-                      height: '30px', 
+                      width: '120px',
+                      height: '24px', 
                       borderRadius: '32px',
                       backgroundColor: inputMode === 'describe' ? '#474E54' : '#181A1C'
                     }}
@@ -148,8 +148,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                         : 'text-gray-400 hover:text-white hover:bg-gray-700'
                     }`}
                     style={{ 
-                      width: '150px',
-                      height: '30px', 
+                      width: '120px',
+                      height: '24px', 
                       borderRadius: '32px',
                       backgroundColor: inputMode === 'lyrics' ? '#474E54' : '#181A1C'
                     }}
@@ -168,8 +168,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                     className="rounded-lg p-3 text-white placeholder-gray-500 resize-none focus:outline-none focus:ring-2 focus:ring-gray-600 transition-all duration-200 text-xs"
                     style={{ 
                       backgroundColor: '#1B1B1B',
-                      width: '248px',
-                      height: '180px',
+                      width: '226px',
+                      height: '144px',
                       paddingBottom: '28px', // Add extra padding at bottom for character counter
                       marginTop: '-3px'
                     }}
@@ -181,12 +181,12 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                 </div>
               </div>
               <div className="flex justify-center mt-2">
-                <div className="flex" style={{ width: '248px', justifyContent: 'flex-start', gap: '8px' }}>
+                <div className="flex" style={{ width: '226px', justifyContent: 'flex-start', gap: '8px' }}>
                   <button 
                     className="hover:bg-gray-700 text-gray-400 hover:text-white rounded-full text-[10px] font-medium transition-all duration-200 flex items-center justify-center" 
                     style={{ 
-                      width: '85px',
-                      height: '22px', 
+                      width: '78px',
+                      height: '18px', 
                       borderRadius: '32px',
                       backgroundColor: '#181A1C',
                       marginTop: '-3px'
@@ -198,8 +198,8 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
                     onClick={handleClearLyrics}
                     className="hover:bg-gray-700 text-gray-400 hover:text-white rounded-full text-[10px] font-medium transition-all duration-200 flex items-center justify-center"
                     style={{ 
-                      width: '55px',
-                      height: '22px', 
+                      width: '44px',
+                      height: '18px', 
                       borderRadius: '32px',
                       backgroundColor: '#181A1C', 
                       marginTop: '-3px'
@@ -219,7 +219,7 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
             style={{
               background: 'linear-gradient(45deg, #9730EF 0%, #5937EE 50%, #7456EC 100%)',
               borderRadius: '50px',
-              width: '248px',
+              width: '198px',
               // height: '42px',
               transition: 'all 300ms ease-out',
               // marginTop: '70px'

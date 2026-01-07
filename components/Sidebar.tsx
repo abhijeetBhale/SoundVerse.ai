@@ -19,10 +19,10 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
   ];
 
   return (
-    <div className="fixed left-0 top-0 h-full w-10 sm:w-12 bg-dark-bg z-40 flex flex-col items-center py-3 sm:py-4">
+    <div className="fixed left-0 top-0 h-full w-8 sm:w-10 bg-dark-bg z-40 flex flex-col items-center py-2 sm:py-3">
       {/* Logo */}
       <div 
-        className="w-8 h-8 sm:w-10 sm:h-10 rounded-md sm:rounded-lg flex items-center justify-center mb-2 sm:mb-3 cursor-pointer hover:bg-gray-800/20 transition-all duration-200"
+        className="w-6 h-6 sm:w-8 sm:h-8 rounded-md sm:rounded-lg flex items-center justify-center mb-2 sm:mb-2 cursor-pointer hover:bg-gray-800/20 transition-all duration-200"
         onClick={onLogoClick}
         aria-label="Go to Meet DNA page"
         title="Meet DNA"
@@ -30,7 +30,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
         <img
           src={getUIImage('logoSoundverseAi')}
           alt="SoundVerse AI"
-          className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
+          className="w-4 h-4 sm:w-5 sm:h-5 object-contain"
           onError={(e) => {
             // If logo fails to load, hide it and show fallback
             console.log('Logo failed to load');
@@ -85,7 +85,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeNavItem, onNavItemClick, onLogo
       <div className="mt-auto">
         <button 
           className="rounded-full overflow-hidden hover:scale-105 transition-transform duration-200 flex items-center justify-center relative bg-gray-800"
-          style={{ width: '32px', height: '32px' }}
+          style={{ width: '27px', height: '27px' }}
           aria-label="Profile"
           title="Profile"
         >
