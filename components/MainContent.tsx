@@ -250,7 +250,7 @@ const MainContent: React.FC<MainContentProps> = ({
                 <div className="w-full h-px bg-border-color mb-5 lg:mb-4"></div>
 
                 {/* Tabs: CORE STYLE / SIGNATURE SOUND */}
-                <div className="flex flex-col sm:flex-row justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-3 mb-4 lg:mb-2 px-4">
+                <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-3 mb-4 lg:mb-2 px-4">
                   <button
                     onClick={() => setActiveTab('core')}
                     className={`px-3 sm:px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 flex items-center justify-center ${
