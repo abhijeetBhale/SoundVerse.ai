@@ -70,13 +70,13 @@ const MainContent: React.FC<MainContentProps> = ({
 
   return (
     <div 
-      className={`fixed top-0 right-0 bottom-0 z-20 transition-all duration-300 ${
-        isDnaOpen ? 'left-[300px]' : 'left-8 sm:left-10'
+      className={`fixed top-0 right-0 bottom-0 z-20 transition-all duration-300 pt-14 md:pt-0 ${
+        isDnaOpen ? 'md:left-[300px]' : 'left-0 md:left-8 lg:left-10'
       } ${isOpen ? 'animate-fade-in' : ''}`}
       style={{ 
         backgroundColor: isDnaOpen ? '#0E0E0F' : '#000000',
-        width: isDnaOpen ? 'calc(100vw - 300px)' : 'calc(100vw - 60px)',
-        height: '100vh'
+        width: isDnaOpen ? 'calc(100vw - 300px)' : 'calc(100vw - 0px)',
+        height: '100vh',
       }}
     >
       <div className={`h-full flex flex-col ${isDnaOpen ? 'p-2 sm:p-4' : ''}`}>
@@ -128,10 +128,10 @@ const MainContent: React.FC<MainContentProps> = ({
               paddingTop: '20px' // Add top padding for better spacing
             }}
           >
-            <div className="p-4 md:p-6">
-              <div className="w-full max-w-5xl mx-auto ">
+            <div className="p-4 md:p-6 lg:px-12 xl:px-6">
+              <div className="w-full max-w-5xl mx-auto">
                 {/* Top Section - Artist Info */}
-                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start space-y-1 lg:space-y-0 lg:space-x-4 mb-2 gap-1 lg:gap-4">
+                <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center lg:justify-start space-y-3 lg:space-y-0 lg:space-x-4 mb-4 lg:mb-2 gap-3 lg:gap-4 px-4 sm:px-6 lg:px-0">
                   {/* Circular Artwork with Waveform */}
                   <div className="relative flex-shrink-0">
                     <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 rounded-full">
@@ -209,7 +209,7 @@ const MainContent: React.FC<MainContentProps> = ({
                     />
 
                     {/* Large Artist Name with clean text */}
-                    <h1 className="mb-1 lg:mb-2 text-[90px] font-[800] leading-[49px] tracking-[0] align-middle relative lg:-ml-2 mt-2" style={{
+                    <h1 className="mb-2 lg:mb-2 text-[50px] sm:text-[60px] md:text-[70px] lg:text-[80px] xl:text-[90px] font-[800] leading-[35px] sm:leading-[40px] md:leading-[45px] lg:leading-[49px] tracking-[0] align-middle relative lg:-ml-2 mt-2 px-4 sm:px-0" style={{
                       fontFamily: 'PowerGrotesk',
                       zIndex: 20
                     }}>
@@ -226,12 +226,12 @@ const MainContent: React.FC<MainContentProps> = ({
                     </h1>
 
                     {/* Description */}
-                    <p className="font-inter text-[12px] sm:text-[11px] font-[400] leading-[11px] sm:leading-[12px] tracking-[0] text-text-secondary mb-1 max-w-[530px] mx-auto lg:mx-0 mt-9 -mr-10" style={{color: '#D9D9D9'}}>
+                    <p className="font-inter text-[11px] sm:text-[11px] md:text-[12px] font-[400] leading-[12px] sm:leading-[12px] md:leading-[13px] tracking-[0] text-text-secondary mb-2 lg:mb-1 max-w-[90%] sm:max-w-[530px] mx-auto lg:mx-0 mt-6 sm:mt-7 md:mt-8 lg:mt-9 lg:-mr-10 px-4 sm:px-0" style={{color: '#D9D9D9'}}>
                       EDM visionary known for hit remixes and artist management. 6 Core Styles and 30 Signature Sounds.
                     </p>
 
                     {/* Genre Tags */}
-                    <div className="flex items-center justify-center lg:justify-start gap-2 mb-1 flex-wrap mt-3" style={{color: '#828282'}}>
+                    <div className="flex items-center justify-center lg:justify-start gap-2 mb-2 lg:mb-1 flex-wrap mt-2 sm:mt-3 px-4 sm:px-0" style={{color: '#828282'}}>
                       {['House', 'Dance Pop', 'Pop', 'EDM'].map((genre, index) => (
                         <React.Fragment key={genre}>
                           <span className="font-inter text-[10px] sm:text-[11px] font-[400] leading-[11px] sm:leading-[12px] tracking-[0] text-text-secondary">
@@ -247,10 +247,10 @@ const MainContent: React.FC<MainContentProps> = ({
                 </div>
 
                 {/* Separator Line - Only between heading and tabs */}
-                <div className="w-full h-px bg-border-color mb-4"></div>
+                <div className="w-full h-px bg-border-color mb-5 lg:mb-4"></div>
 
                 {/* Tabs: CORE STYLE / SIGNATURE SOUND */}
-                <div className="flex flex-col sm:flex-row justify-center sm:justify-start space-y-1 sm:space-y-0 sm:space-x-3 mb-2">
+                <div className="flex flex-col sm:flex-row justify-center lg:justify-start space-y-2 sm:space-y-0 sm:space-x-3 mb-4 lg:mb-2 px-4">
                   <button
                     onClick={() => setActiveTab('core')}
                     className={`px-3 sm:px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 flex items-center justify-center ${
@@ -286,15 +286,13 @@ const MainContent: React.FC<MainContentProps> = ({
                 </div>
 
                 {/* Style Cards Grid */}
-                <div className="grid grid-cols-5 gap-2 mb-0 px-4" style={{ marginTop: '25px' }}>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-3 md:gap-3 lg:gap-2 mb-0 px-4 justify-items-center" style={{ marginTop: '30px' }}>
                   {filteredStyles.map((style, index) => (
                     <div
                       key={style.id}
                       className="animate-scale-in"
                       style={{ 
                         animationDelay: `${index * 0.1}s`,
-                        width: '120px',
-                        height: '176px'
                       }}
                     >
                       <StyleCard
@@ -335,7 +333,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
           {/* Show Player Button - When music is playing but player is hidden */}
           {currentTrack && !isPlayerVisible && (
-            <div className="absolute bottom-3 right-3 z-30">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 lg:bottom-4 lg:right-12 lg:left-auto lg:translate-x-0 z-30">
               <button
                 onClick={onShowPlayer}
                 className="w-10 h-10 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"

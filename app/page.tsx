@@ -123,6 +123,9 @@ export default function Home() {
   ]);
 
   const handleNavItemClick = (item: 'create' | 'home' | 'search' | 'library' | 'dna') => {
+    // Check if we're on mobile (screen width < 768px)
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    
     if (item === 'dna') {
       setPanelState(prev => {
         if (prev.isDnaOpen && prev.activeNavItem === 'dna') {
@@ -137,7 +140,7 @@ export default function Home() {
             ...prev,
             isDnaOpen: true,
             activeNavItem: item,
-            isMainContentOpen: true
+            isMainContentOpen: !isMobile // On mobile, hide MainContent when DNA panel is open
           };
         }
       });
@@ -245,8 +248,8 @@ export default function Home() {
       {!panelState.isMainContentOpen && (
         <div 
           className={`flex items-center justify-center min-h-screen transition-all duration-500 ease-out ${
-            panelState.isDnaOpen ? 'ml-[292px]' : 'ml-10 sm:ml-12'
-          } animate-fade-in px-3 py-6`}
+            panelState.isDnaOpen ? 'md:ml-[292px]' : 'ml-0 md:ml-10 lg:ml-12'
+          } animate-fade-in px-3 py-6 pt-20 md:pt-6`}
         >
           <div 
             className="text-center px-4 sm:px-6 animate-scale-in flex flex-col justify-center items-center max-w-full"

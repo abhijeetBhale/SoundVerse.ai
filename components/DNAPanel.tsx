@@ -23,7 +23,7 @@ const DNAPanel: React.FC<DNAPanelProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed left-10 top-0 h-full z-30 animate-slide-in" style={{ width: '260px' }}>
+    <div className="fixed left-0 md:left-10 top-14 md:top-0 h-[calc(100vh-56px)] md:h-full z-30 animate-slide-in w-full md:w-[260px]" style={{ backgroundColor: '#000000' }}>
       <div className="flex flex-col h-full bg-dark-bg">
         {/* Header */}
         <div className="flex items-center justify-between p-4 pb-3">

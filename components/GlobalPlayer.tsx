@@ -149,102 +149,105 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
 
   return (
     <div className="p-2 flex justify-center">
-      <div className={`bg-dark-bg rounded-xl p-3 relative transition-all duration-300 shadow-2xl border border-gray-800/50 ${
+      <div className={`bg-dark-bg rounded-lg sm:rounded-xl p-2 sm:p-3 lg:p-3 relative transition-all duration-300 shadow-2xl border border-gray-800/50 ${
         isClosing ? 'animate-player-slide-out' : 'animate-player-slide-in'
       }`}
       style={{
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05)',
-        width: '800px', // Fixed width instead of flexible
-        height: '100px' // Reduced height to prevent large container
+        width: '96%',
+        maxWidth: '900px',
+        minWidth: '280px',
+        height: 'auto',
+        minHeight: '80px'
       }}>
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-2 right-2 w-5 h-5 rounded-full hover:bg-gray-800 transition-all duration-200 flex items-center justify-center z-10 backdrop-blur-sm"
+          className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 w-4 h-4 sm:w-5 sm:h-5 rounded-full hover:bg-gray-800 transition-all duration-200 flex items-center justify-center z-10 backdrop-blur-sm"
           aria-label="Close player"
         >
-          <X className="w-3 h-3 text-text-secondary hover:text-white transition-colors" />
+          <X className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-text-secondary hover:text-white transition-colors" />
         </button>
 
-        <div className="flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:items-center justify-between pr-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-center lg:justify-between pr-2 sm:pr-4 gap-2 lg:gap-0">
           {/* Track Info */}
-          <div className="flex items-center space-x-2 min-w-0 flex-1">
+          <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-shrink-0 lg:flex-1 lg:max-w-[200px] xl:max-w-[250px] justify-center lg:justify-start">
             <div 
-              className="w-12 h-12 rounded-lg flex-shrink-0 bg-gradient-to-br from-purple-600 to-blue-600"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex-shrink-0 bg-gradient-to-br from-purple-600 to-blue-600"
               style={{
                 backgroundImage: `url(${currentTrack.imageUrl})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
               }}
             />
-            <div className="min-w-0">
-              <h4 className="text-white font-bold text-sm truncate">
+            <div className="min-w-0 flex-1">
+              <h4 className="text-white font-bold text-xs sm:text-sm truncate">
                 {currentTrack.title}
               </h4>
-              <p className="text-text-secondary text-sm truncate">
+              <p className="text-text-secondary text-[10px] sm:text-xs truncate">
                 {currentTrack.description.split(' - ')[0]} • {currentTrack.category.toUpperCase()}
               </p>
             </div>
           </div>
 
           {/* Controls */}
-          <div className="flex flex-col items-center space-y-1 flex-1 max-w-md">
-            <div className="flex items-center space-x-3 ml-10">
+          <div className="flex flex-col items-center justify-center space-y-1 flex-1 w-full lg:max-w-md xl:max-w-lg">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-3">
               <button
                 onClick={onPrevious}
                 disabled={!hasPrevious}
-                className={`w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
                   hasPrevious 
                     ? 'hover:bg-gray-900 text-text-secondary hover:text-white' 
                     : 'text-gray-600 cursor-not-allowed'
                 }`}
                 aria-label="Previous track"
               >
-                <SkipBack className="w-4 h-4 transition-colors" />
+                <SkipBack className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
               </button>
               
               <button
                 onClick={onTogglePlayPause}
-                className="w-12 h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
+                className="w-10 h-10 sm:w-12 sm:h-12 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
                 aria-label={isPlaying ? `Pause ${currentTrack.title}` : `Play ${currentTrack.title}`}
               >
                 {isPlaying ? (
-                  <Pause className="w-5 h-5 text-black" fill="currentColor" />
+                  <Pause className="w-4 h-4 sm:w-5 sm:h-5 text-black" fill="currentColor" />
                 ) : (
-                  <Play className="w-5 h-5 text-black ml-0.5" fill="currentColor" />
+                  <Play className="w-4 h-4 sm:w-5 sm:h-5 text-black ml-0.5" fill="currentColor" />
                 )}
               </button>
               
               <button
                 onClick={onNext}
                 disabled={!hasNext}
-                className={`w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
+                className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
                   hasNext 
                     ? 'hover:bg-gray-900 text-text-secondary hover:text-white' 
                     : 'text-gray-600 cursor-not-allowed'
                 }`}
                 aria-label="Next track"
               >
-                <SkipForward className="w-4 h-4 transition-colors" />
+                <SkipForward className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors" />
               </button>
 
               <button
                 onClick={onToggleQueue}
-                className="w-8 h-8 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center ml-1"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
                 aria-label="Show queue"
               >
-                <List className="w-4 h-4 text-text-secondary hover:text-white transition-colors" />
+                <List className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-text-secondary hover:text-white transition-colors" />
               </button>
             </div>
 
             {/* Progress Bar */}
-            <div className="flex items-center space-x-3 w-full">
-              <span className="text-sm text-text-secondary min-w-[30px] font-mono time-display">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-3 w-full">
+              <span className="text-[10px] sm:text-xs text-text-secondary min-w-[28px] sm:min-w-[32px] font-mono time-display">
                 {formatTime(currentTime)}
               </span>
               <div
                 ref={seekRef}
-                className="flex-1 h-2 bg-gray-900 rounded-full cursor-pointer group relative"
+                className="flex-1 h-1.5 sm:h-2 bg-gray-900 rounded-full cursor-pointer group relative"
                 onMouseDown={handleSeekMouseDown}
               >
                 {/* Progress fill */}
@@ -255,34 +258,34 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                   }}
                 >
                   {/* Progress handle */}
-                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg transition-all duration-200 ${
+                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-white rounded-full shadow-lg transition-all duration-200 ${
                     isDraggingSeek || progress > 0 ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </div>
               </div>
-              <span className="text-sm text-text-secondary min-w-[30px] font-mono time-display">
+              <span className="text-[10px] sm:text-xs text-text-secondary min-w-[28px] sm:min-w-[32px] font-mono time-display">
                 {formatTime(duration)}
               </span>
             </div>
           </div>
 
-          {/* Volume */}
-          <div className="hidden md:flex items-center space-x-3 flex-1 justify-end">
+          {/* Volume - Desktop */}
+          <div className="hidden lg:flex items-center space-x-2 xl:space-x-3 flex-shrink-0 justify-end lg:max-w-[140px] xl:max-w-[160px]">
             <button
               onClick={onToggleMute}
-              className="w-8 h-8 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
+              className="w-7 h-7 xl:w-8 xl:h-8 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
               aria-label={isMuted ? 'Unmute' : 'Mute'}
             >
               {isMuted ? (
-                <VolumeX className="w-4 h-4 text-text-secondary hover:text-white transition-colors" />
+                <VolumeX className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-text-secondary hover:text-white transition-colors" />
               ) : (
-                <Volume2 className="w-4 h-4 text-text-secondary hover:text-white transition-colors" />
+                <Volume2 className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-text-secondary hover:text-white transition-colors" />
               )}
             </button>
             <div className="relative">
               <div
                 ref={volumeRef}
-                className="w-20 h-2 bg-gray-900 rounded-full cursor-pointer group relative"
+                className="w-16 xl:w-20 h-1.5 xl:h-2 bg-gray-900 rounded-full cursor-pointer group relative"
                 onMouseDown={handleVolumeMouseDown}
               >
                 <div
@@ -292,13 +295,13 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                     transition: isDraggingVolume ? 'none' : 'width 0.15s ease-out'
                   }}
                 >
-                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full shadow-lg transition-opacity duration-200 ${
+                  <div className={`absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 xl:w-3 xl:h-3 bg-white rounded-full shadow-lg transition-opacity duration-200 ${
                     isDraggingVolume ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
                   }`} />
                 </div>
               </div>
               {/* Volume Percentage Display */}
-              <div className={`absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded transition-opacity duration-200 ${
+              <div className={`absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded transition-opacity duration-200 ${
                 isDraggingVolume ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
               }`}>
                 {Math.round((isMuted ? 0 : volume) * 100)}%
@@ -306,22 +309,22 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
             </div>
           </div>
 
-          {/* Mobile Volume */}
-          <div className="flex md:hidden items-center space-x-2 justify-center">
+          {/* Volume - Mobile/Tablet */}
+          <div className="flex lg:hidden items-center space-x-2 justify-center">
             <button
               onClick={onToggleMute}
-              className="w-6 h-6 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
+              className="w-6 h-6 sm:w-7 sm:h-7 rounded-full hover:bg-gray-900 transition-all duration-200 flex items-center justify-center"
               aria-label={isMuted ? 'Unmute' : 'Mute'}
             >
               {isMuted ? (
-                <VolumeX className="w-3 h-3 text-text-secondary" />
+                <VolumeX className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-text-secondary" />
               ) : (
-                <Volume2 className="w-3 h-3 text-text-secondary" />
+                <Volume2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-text-secondary" />
               )}
             </button>
             <div className="relative group">
               <div
-                className="w-12 h-1 bg-gray-900 rounded-full cursor-pointer relative"
+                className="w-12 sm:w-16 h-1 sm:h-1.5 bg-gray-900 rounded-full cursor-pointer relative"
                 onMouseDown={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const percent = (e.clientX - rect.left) / rect.width;
@@ -335,7 +338,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                 />
               </div>
               {/* Mobile Volume Percentage Display */}
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 {Math.round((isMuted ? 0 : volume) * 100)}%
               </div>
             </div>

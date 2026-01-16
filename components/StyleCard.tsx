@@ -26,10 +26,11 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
           isHovered ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
-          backgroundColor: '#212121', // Grey hover background
-          transform: isHovered ? 'scale(1.01)' : 'scale(1)', // Minimal scale to prevent overlap
-          width: '188px',
-          height: '262px',
+          backgroundColor: '#212121',
+          transform: isHovered ? 'scale(1.01)' : 'scale(1)',
+          width: 'calc(100% + 8px)',
+          height: 'calc(100% + 8px)',
+          maxWidth: '148px',
           marginLeft: '-4px',
           marginTop: '-4px',
           borderRadius: '6px',
@@ -38,10 +39,10 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
       
       {/* Main Card */}
       <div
-        className="group relative cursor-pointer transition-all duration-200 w-full z-10"
+        className="group relative cursor-pointer transition-all duration-200 w-full max-w-[140px] mx-auto z-10"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        onClick={() => onPlay(style)} // Add click handler to activate player
+        onClick={() => onPlay(style)}
         role="button"
         tabIndex={0}
         aria-label={`Play ${style.title} - ${style.description}`}
@@ -51,19 +52,13 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
             onPlay(style);
           }
         }}
-        style={{
-          backgroundColor: 'transparent', // Remove black background
-          height: '176px',
-          width: '120px',
-          // marginBottom: '20px'
-        }}
       >
-      {/* Image Container - Square dimensions */}
-      <div className="relative" style={{ 
-        width: '180px',
-        height: '180px', 
+      {/* Image Container - Responsive dimensions */}
+      <div className="relative w-full aspect-square" style={{ 
         borderRadius: '4px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        maxWidth: '140px',
+        margin: '0 auto'
       }}>
         <div
           className="w-full h-full bg-gradient-to-br from-purple-600 to-blue-600 transition-transform duration-300 group-hover:scale-110"
@@ -104,12 +99,12 @@ const StyleCard: React.FC<StyleCardProps> = ({ style, onPlay, isPlaying = false 
       </div>
 
       {/* Content - No background, centered text */}
-      <div className="p-4 flex-1 flex flex-col justify-center items-center ml-10">
-        <div className="text-center">
-          <h3 className="font-power text-[18px] font-[400] leading-[1.4] tracking-[0] text-center text-white transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis -mt-2 ml-5">
+      <div className="p-2 sm:p-3 md:p-4 flex-1 flex flex-col justify-center items-center">
+        <div className="text-center w-full">
+          <h3 className="font-power text-[14px] sm:text-[16px] md:text-[18px] font-[400] leading-[1.4] tracking-[0] text-center text-white transition-colors duration-200 whitespace-nowrap overflow-hidden text-ellipsis -mt-1 sm:-mt-2">
             {style.title}
           </h3>
-          <p className="font-macan text-[11px] font-[400] leading-[1.4] tracking-[0] text-center text-text-secondary line-clamp-2 ml-5" style={{color: '#828282'}}>
+          <p className="font-macan text-[9px] sm:text-[10px] md:text-[11px] font-[400] leading-[1.4] tracking-[0] text-center text-text-secondary line-clamp-2 px-1" style={{color: '#828282'}}>
             {style.description}
           </p>
         </div>
