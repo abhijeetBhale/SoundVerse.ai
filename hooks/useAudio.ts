@@ -21,6 +21,7 @@ export const useAudio = () => {
   const [queue, setQueue] = useState<StyleCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [isQueueVisible, setIsQueueVisible] = useState(false);
+  const [hasBeenSeeked, setHasBeenSeeked] = useState(false);
   
   // Store the volume before muting
   const [volumeBeforeMute, setVolumeBeforeMute] = useState(0.7);
@@ -43,14 +44,30 @@ export const useAudio = () => {
   const updateTime = useCallback(() => {
     if (howlRef.current) {
       const currentTime = howlRef.current.seek() as number;
+      const duration = howlRef.current.duration();
+      
       if (typeof currentTime === 'number' && currentTime >= 0) {
         setPlaybackState(prev => ({
           ...prev,
           currentTime: currentTime,
         }));
+        
+        // Check if song has naturally ended (within 0.5 seconds of duration)
+        if (typeof duration === 'number' && currentTime >= duration - 0.5 && playbackState.isPlaying) {
+          // Song has ended naturally, advance to next track
+          setPlaybackState(prev => ({
+            ...prev,
+            isPlaying: false,
+            currentTime: 0,
+          }));
+          
+          // Reset seek flag and advance to next track
+          setHasBeenSeeked(false);
+          setTimeout(() => playNext(), 100);
+        }
       }
     }
-  }, []);
+  }, [playbackState.isPlaying]);
 
   useEffect(() => {
     const startTimeUpdates = () => {
@@ -119,13 +136,8 @@ export const useAudio = () => {
         }));
       },
       onend: () => {
-        setPlaybackState(prev => ({
-          ...prev,
-          isPlaying: false,
-          currentTime: 0,
-        }));
-        // Auto-play next track when current ends
-        playNext();
+        // This callback might be unreliable after seeking, so we handle end detection in updateTime
+        console.log('Howl onend triggered');
       },
       onloaderror: (_id: any, error: any) => {
         console.warn('Audio error:', error);
@@ -139,11 +151,20 @@ export const useAudio = () => {
         
         const simulateProgress = () => {
           setPlaybackState(prev => {
-            if (!prev.isPlaying || prev.currentTime >= prev.duration) {
-              playNext(); // Auto-play next track
-              return { ...prev, isPlaying: false, currentTime: 0 };
+            const newTime = prev.currentTime + (1/60);
+            if (!prev.isPlaying || newTime >= prev.duration) {
+              // Clear the simulation interval
+              if (animationRef.current) {
+                clearInterval(animationRef.current as any);
+                animationRef.current = null;
+              }
+              // Auto-play next track only if we reached the actual end
+              if (newTime >= prev.duration) {
+                setTimeout(() => playNext(), 100);
+              }
+              return { ...prev, isPlaying: false, currentTime: prev.duration };
             }
-            return { ...prev, currentTime: prev.currentTime + (1/60) }; // 60fps updates
+            return { ...prev, currentTime: newTime };
           });
         };
         
@@ -156,6 +177,7 @@ export const useAudio = () => {
 
     howlRef.current = sound;
     setCurrentIndex(index);
+    setHasBeenSeeked(false); // Reset seek flag for new track
     
     setPlaybackState(prev => ({
       ...prev,
@@ -182,11 +204,29 @@ export const useAudio = () => {
         
         const simulateProgress = () => {
           setPlaybackState(prev => {
-            if (!prev.isPlaying || prev.currentTime >= prev.duration) {
-              playNext(); // Auto-play next track
-              return { ...prev, isPlaying: false, currentTime: 0 };
+            const newTime = prev.currentTime + (1/60);
+            if (!prev.isPlaying) {
+              // Clear the simulation interval
+              if (animationRef.current) {
+                clearInterval(animationRef.current as any);
+                animationRef.current = null;
+              }
+              return prev;
             }
-            return { ...prev, currentTime: prev.currentTime + (1/60) }; // 60fps updates
+            
+            if (newTime >= prev.duration) {
+              // Clear the simulation interval
+              if (animationRef.current) {
+                clearInterval(animationRef.current as any);
+                animationRef.current = null;
+              }
+              // Auto-play next track only if we reached the actual end
+              setHasBeenSeeked(false);
+              setTimeout(() => playNext(), 100);
+              return { ...prev, isPlaying: false, currentTime: prev.duration };
+            }
+            
+            return { ...prev, currentTime: newTime };
           });
         };
         
@@ -264,6 +304,9 @@ export const useAudio = () => {
 
   const seek = useCallback((time: number) => {
     const clampedTime = Math.max(0, Math.min(time, playbackState.duration));
+    
+    // Mark that this track has been seeked
+    setHasBeenSeeked(true);
     
     if (howlRef.current) {
       howlRef.current.seek(clampedTime);

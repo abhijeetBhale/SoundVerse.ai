@@ -44,10 +44,12 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
   const [isClosing, setIsClosing] = useState(false);
   const [isDraggingVolume, setIsDraggingVolume] = useState(false);
   const [isDraggingSeek, setIsDraggingSeek] = useState(false);
+  const [pendingSeekTime, setPendingSeekTime] = useState<number | null>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
   const seekRef = useRef<HTMLDivElement>(null);
   const volumeRefDesktop = useRef<HTMLDivElement>(null);
   const seekRefDesktop = useRef<HTMLDivElement>(null);
+  const seekTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   if (!currentTrack) return null;
 
@@ -90,7 +92,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
     setIsDraggingVolume(false);
   }, []);
 
-  // Simplified seek handling - immediate seek on interaction
+  // Optimized seek handling with throttling to prevent audio stuttering
   const handleSeekInteraction = useCallback((clientX: number, ref?: React.RefObject<HTMLDivElement>) => {
     const seekElement = ref?.current || seekRef.current;
     if (!seekElement) return;
@@ -99,9 +101,19 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
     const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
     const newTime = percent * duration;
     
-    // Immediately seek to the new position
-    onSeek(newTime);
-  }, [onSeek, duration]);
+    // Store the pending seek time for visual feedback
+    setPendingSeekTime(newTime);
+    
+    // Throttle actual seek calls to prevent audio stuttering
+    if (seekTimeoutRef.current) {
+      clearTimeout(seekTimeoutRef.current);
+    }
+    
+    seekTimeoutRef.current = setTimeout(() => {
+      onSeek(newTime);
+      setPendingSeekTime(null);
+    }, isDraggingSeek ? 50 : 0); // 50ms throttle during drag, immediate on click
+  }, [onSeek, duration, isDraggingSeek]);
 
   const handleSeekMouseDown = useCallback((e: React.MouseEvent, ref?: React.RefObject<HTMLDivElement>) => {
     e.preventDefault();
@@ -117,7 +129,15 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
 
   const handleSeekMouseUp = useCallback(() => {
     setIsDraggingSeek(false);
-  }, []);
+    // Ensure final seek is applied immediately
+    if (seekTimeoutRef.current) {
+      clearTimeout(seekTimeoutRef.current);
+      if (pendingSeekTime !== null) {
+        onSeek(pendingSeekTime);
+        setPendingSeekTime(null);
+      }
+    }
+  }, [onSeek, pendingSeekTime]);
 
   // Global mouse event listeners for smooth dragging
   React.useEffect(() => {
@@ -148,8 +168,18 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
     };
   }, [isDraggingSeek, handleSeekMouseMove, handleSeekMouseUp]);
 
-  // Simple progress calculation - always use actual current time
-  const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  // Cleanup timeout on unmount
+  React.useEffect(() => {
+    return () => {
+      if (seekTimeoutRef.current) {
+        clearTimeout(seekTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Progress calculation with pending seek time for smooth visual feedback
+  const displayTime = pendingSeekTime !== null ? pendingSeekTime : currentTime;
+  const progress = duration > 0 ? (displayTime / duration) * 100 : 0;
 
   return (
     <div className="p-2 flex justify-center">
@@ -240,7 +270,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
           {/* Progress Bar */}
           <div className="flex items-center space-x-3 w-full px-2">
             <span className="text-xs text-text-secondary min-w-[35px] font-mono time-display">
-              {formatTime(currentTime)}
+              {formatTime(displayTime)}
             </span>
             <div
               ref={seekRef}
@@ -253,12 +283,24 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
                 handleSeekInteraction(touch.clientX, seekRef);
               }}
               onTouchMove={(e) => {
+                e.preventDefault();
                 if (isDraggingSeek) {
                   const touch = e.touches[0];
                   handleSeekInteraction(touch.clientX, seekRef);
                 }
               }}
-              onTouchEnd={() => setIsDraggingSeek(false)}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                setIsDraggingSeek(false);
+                // Ensure final seek is applied immediately on touch end
+                if (seekTimeoutRef.current) {
+                  clearTimeout(seekTimeoutRef.current);
+                  if (pendingSeekTime !== null) {
+                    onSeek(pendingSeekTime);
+                    setPendingSeekTime(null);
+                  }
+                }
+              }}
               onClick={(e) => {
                 if (!isDraggingSeek) {
                   handleSeekInteraction(e.clientX, seekRef);
@@ -421,7 +463,7 @@ const GlobalPlayer: React.FC<GlobalPlayerProps> = ({
             {/* Progress Bar */}
             <div className="flex items-center justify-center space-x-2 sm:space-x-3 w-full">
               <span className="text-[10px] sm:text-xs text-text-secondary min-w-[28px] sm:min-w-[32px] font-mono time-display">
-                {formatTime(currentTime)}
+                {formatTime(displayTime)}
               </span>
               <div
                 ref={seekRefDesktop}

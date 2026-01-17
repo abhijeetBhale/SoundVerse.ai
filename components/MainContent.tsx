@@ -333,7 +333,7 @@ const MainContent: React.FC<MainContentProps> = ({
 
           {/* Show Player Button - When music is playing but player is hidden */}
           {currentTrack && !isPlayerVisible && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 lg:bottom-4 lg:right-12 lg:left-auto lg:translate-x-0 z-30">
+            <div className={`${isDnaOpen ? 'absolute bottom-4 right-4' : 'fixed bottom-4 right-4'} z-50`}>
               <button
                 onClick={onShowPlayer}
                 className="w-10 h-10 bg-white hover:bg-gray-100 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
